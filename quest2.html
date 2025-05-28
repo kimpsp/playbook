@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Квест: Лабиринт</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #f44336;
+    }
+
+    #story {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    #choices button {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 1em;
+      background-color: #2196F3;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #choices button:hover {
+      background-color: #1976D2;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #444;
+      padding: 10px 15px;
+      border-radius: 6px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ссылка "Назад" -->
+  <a href="index.html" class="back-button">← Назад</a>
+
+  <!-- Заголовок -->
+  <h1>Лабиринт</h1>
+
+  <!-- Основной контент квеста -->
+  <div id="story">
+    <p id="narration">
+      Вы очнулись в полной темноте. Рука ощупывает стену справа.<br/>
+      В голове шепчет голос:<br/>
+      «Держись одной руки... Не отпускай стену...»<br/><br/>
+      Что вы делаете?
+    </p>
+    <div id="choices">
+      <button onclick="makeChoice('forward')">Идти прямо</button>
+      <button onclick="makeChoice('right')">Повернуть направо</button>
+      <button onclick="makeChoice('left')">Повернуть налево</button>
+    </div>
+  </div>
+
+  <script>
+    // Объект лабиринта с точками и проверкой правила правой руки
+    const maze = {
+      start: {
+        forward: null,
+        right: 'a1',
+        left: null
+      },
+      a1: {
+        forward: null,
+        right: 'a2',
+        left: 'trap1'
+      },
+      a2: {
+        forward: 'b1',
+        right: 'exit',
+        left: null
+      },
+      b1: {
+        forward: null,
+        right: 'trap2',
+        left: 'a2'
+      }
+    };
+
+    let currentPosition = 'start';
+
+    function makeChoice(direction) {
+      const nextStep = maze[currentPosition][direction];
+
+      if (!nextStep) {
+        showNarration("Вы не можете пойти в этом направлении — здесь нет выхода.", true);
+        return;
+      }
+
+      if (nextStep === 'trap1') {
+        showNarration("Вы нарушили правило… Пол уходит из-под ног...\n\n☠️ Конец игры.", false, true);
+        disableButtons();
+        return;
+
+      } else if (nextStep === 'trap2') {
+        showNarration("Вы снова повернули налево без стены рядом...\n\n💀 Где-то что-то рушится...", false, true);
+        disableButtons();
+        return;
+
+      } else if (nextStep === 'exit') {
+        showNarration("Вы чувствуете прохладу свежего воздуха... Это выход!\n\n🎉 Поздравляем! Вы выбрались из лабиринта!", false, true);
+        disableButtons();
+        return;
+      }
+
+      // Переход к следующей точке
+      currentPosition = nextStep;
+
+      switch (currentPosition) {
+        case 'a1':
+          showNarration("Вы осторожно двигаетесь вперёд. Справа — стена. Теперь перед вами развилка.\n\nЧто делать?", true);
+          break;
+        case 'a2':
+          showNarration("Вы поворачиваете направо. Стена по-прежнему рядом. Дальше коридор разделяется.\n\nВыбирайте путь.", true);
+          break;
+        case 'b1':
+          showNarration("Вы заходите в более широкий зал. Слева — стена. Справа — что-то темное...\n\nБудете ли вы продолжать?", true);
+          break;
+      }
+    }
+
+    function showNarration(text, enableChoices = true, gameOver = false) {
+      document.getElementById("narration").innerText = text;
+      const choicesDiv = document.getElementById("choices");
+      if (!enableChoices || gameOver) {
+        choicesDiv.innerHTML = '';
+        if (gameOver) {
+          choicesDiv.innerHTML = '<button onclick="location.reload()">Начать заново</button>';
+        }
+      }
+    }
+
+    function disableButtons() {
+      const buttons = document.querySelectorAll('#choices button');
+      buttons.forEach(btn => btn.disabled = true);
+    }
+  </script>
+
+</body>
+</html>
