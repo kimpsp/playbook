@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Квест: Лабиринт</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #f44336;
+    }
+
+    p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .choices button {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 1em;
+      background-color: #2196F3;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .choices button:hover {
+      background-color: #1976D2;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #444;
+    }
+
+    .back-button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка "Назад" -->
+  <button class="back-button" onclick="goBack()">← Назад</button>
+
+  <!-- Основной контент квеста -->
+  <div id="story">
+    <h1>Лабиринт</h1>
+    <p id="narration">
+      Вы очнулись в полной темноте.<br/>
+      Руки ощупывают стены — справа камень, слева ничего нет.<br/>
+      Где вы? Что произошло?<br/><br/>
+      В голове раздается шёпот:<br/>
+      «Держись одной руки... Не отпускай стену...»
+    </p>
+    <div class="choices">
+      <button onclick="startJourney()">Пойти прямо</button>
+      <button onclick="alert('Вы не можете повернуть. Справа стена.')">Повернуть налево</button>
+      <button onclick="alert('Вы не можете повернуть. Слева пустота.')">Повернуть направо</button>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html"; // Переход обратно на главную
+    }
+
+    function startJourney() {
+      document.getElementById("narration").innerText = 
+        "Вы осторожно начинаете движение вперёд, держась правой рукой холодной стены.\n\n" +
+        "Теперь вам нужно принимать решения. Помните: ни шагу без стены...";
+      document.querySelector(".choices").innerHTML = `
+        <button onclick="nextStep('forward')">Идти прямо</button>
+        <button onclick="nextStep('left')">Повернуть налево</button>
+        <button onclick="nextStep('right')">Повернуть направо</button>
+      `;
+    }
+
+    function nextStep(choice) {
+      const narration = document.getElementById("narration");
+
+      if (choice === 'forward') {
+        narration.innerText = "Стена справа остаётся рядом. Вы продолжаете идти.";
+      } else if (choice === 'left') {
+        narration.innerHTML = "Вы поворачиваете налево...\n\n☠️ Стена исчезает. Пол уходит из-под ног.\n\nКонец игры.";
+        document.querySelector(".choices").innerHTML = "<button onclick='goBack()'>Перезапустить</button>";
+      } else if (choice === 'right') {
+        narration.innerText = "Вы пытаетесь повернуть направо, но там стена. Нельзя нарушать правило.";
+      }
+    }
+  </script>
+
+</body>
+</html>
