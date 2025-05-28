@@ -189,8 +189,16 @@
 
   <script>
     function startQuest(id) {
-      if (id === 2) {
+      if (id === 1) {
         window.location.href = "quest1.html"; // Переход на первый квест
+      } else {
+        alert("Этот квест ещё в разработке!");
+      }
+    }
+  </script>
+  <script>
+    function startQuest(id) {
+      if (id === 2) {
         window.location.href = "quest2.html"; // Переход на второй квест (тест js)
       } else {
         alert("Этот квест ещё в разработке!");
