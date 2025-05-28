@@ -1,1 +1,79 @@
-<h1>Hello World1!</h1>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Квест: Лабиринт</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #f44336;
+      animation: flicker 2s infinite;
+    }
+
+    p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    button {
+      background-color: #2196F3;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      color: white;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1976D2;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Лабиринт</h1>
+
+  <p>
+    Вы просыпаетесь в полной темноте.<br/>
+    Воздух сырой, стены каменные. Рука нащупывает холодную поверхность рядом — вы понимаете: справа — стена.<br/>
+    Где вы? Кто вы? И главное — как выбраться?<br/><br/>
+    Голос внутри шепчет:<br/>
+    «Держись одной руки... Не отпускай стену...»
+  </p>
+
+  <button onclick="startQuest()">▶️ Начать квест</button>
+
+  <script>
+    function startQuest() {
+      // Переход на страницу квеста или загрузка игры динамически
+      window.location.href = "quest.html"; // или loadQuest()
+    }
+  </script>
+
+</body>
+</html>
