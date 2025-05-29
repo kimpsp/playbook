@@ -200,6 +200,33 @@
 </script>
 
   <script>
+  function startQuest(id) {
+    if (id === 1) {
+      window.location.href = "quest1.html"; // Переход на первый квест
+    } else if (id === 2) {
+      window.location.href = "quest2.html"; // Переход на второй квест
+    } else {
+      alert("Этот квест ещё в разработке!");
+    }
+  }
+
+  function selectQuest(button) {
+    // Удаляем класс active у всех карточек
+    document.querySelectorAll('.quest-card').forEach(card => {
+      card.classList.remove('active');
+    });
+
+    // Находим карточку, внутри которой находится кнопка
+    const selectedCard = button.closest('.quest-card');
+
+    // Добавляем класс active этой карточке
+    if (selectedCard) {
+      selectedCard.classList.add('active');
+    }
+  }
+</script>
+
+<!--   <script>
   function selectQuest(button) {
     // Находим все карточки
     const cards = document.querySelectorAll('.quest-card');
@@ -213,7 +240,7 @@
     // Добавляем класс 'active' только этой карточке
     selectedCard.classList.add('active');
   }
-</script>
+</script> -->
 
 </body>
 </html>
