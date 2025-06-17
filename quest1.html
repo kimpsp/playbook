@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Квест: Лабиринт</title>
+  <title>Квест: Лабиринт v 4.0</title>
   <style>
     body {
       background-color: #000;
@@ -11,8 +11,8 @@
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
       margin: 0;
       padding: 20px;
@@ -56,64 +56,136 @@
       top: 20px;
       left: 20px;
       background-color: #444;
-    }
-
-    .back-button:hover {
-      background-color: #666;
+      padding: 10px 15px;
+      border-radius: 6px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
 
   <!-- Кнопка "Назад" -->
-  <button class="back-button" onclick="goBack()">← Назад</button>
+  <a href="index.html" class="back-button">← Назад</a>
+
+  <!-- Заголовок -->
+  <h1>Лабиринт</h1>
 
   <!-- Основной контент квеста -->
   <div id="story">
-    <h1>Лабиринт</h1>
-    <p id="narration">
-      Вы очнулись в полной темноте.<br/>
-      Руки ощупывают стены — справа камень, слева ничего нет.<br/>
-      Где вы? Что произошло?<br/><br/>
-      В голове раздается шёпот:<br/>
-      «Держись одной руки... Не отпускай стену...»
-    </p>
-    <div class="choices">
-      <button onclick="startJourney()">Пойти прямо</button>
-      <button onclick="alert('Вы не можете повернуть. Справа стена.')">Повернуть налево</button>
-      <button onclick="alert('Вы не можете повернуть. Слева пустота.')">Повернуть направо</button>
-    </div>
+    <p id="narration"></p>
+    <div class="choices" id="choices"></div>
   </div>
 
   <script>
-    function goBack() {
-      window.location.href = "index.html"; // Переход обратно на главную
-    }
+    const nodes = {
+      start: {
+        text: "Вы очнулись в темноте. Рука нащупывает холодную стену справа.\n\nПеред вами развилка.",
+        choices: [
+          { text: "Идти прямо", next: "node_1" },
+          { text: "Повернуть направо", next: "trap_1" }
+        ]
+      },
 
-    function startJourney() {
-      document.getElementById("narration").innerText = 
-        "Вы осторожно начинаете движение вперёд, держась правой рукой холодной стены.\n\n" +
-        "Теперь вам нужно принимать решения. Помните: ни шагу без стены...";
-      document.querySelector(".choices").innerHTML = `
-        <button onclick="nextStep('forward')">Идти прямо</button>
-        <button onclick="nextStep('left')">Повернуть налево</button>
-        <button onclick="nextStep('right')">Повернуть направо</button>
-      `;
-    }
+      node_1: {
+        text: "Вы осторожно двигаетесь вперёд. Перед вами новый выбор.",
+        choices: [
+          { text: "Идти прямо", next: "node_2" },
+          { text: "Повернуть налево", next: "trap_2" },
+          { text: "Повернуть направо", next: "node_3" }
+        ]
+      },
 
-    function nextStep(choice) {
-      const narration = document.getElementById("narration");
+      node_2: {
+        text: "Вы зашли в более широкий коридор. Что делать?",
+        choices: [
+          { text: "Идти прямо", next: "trap_3" },
+          { text: "Повернуть налево", next: "node_4" },
+          { text: "Повернуть направо", next: "node_5" }
+        ]
+      },
 
-      if (choice === 'forward') {
-        narration.innerText = "Стена справа остаётся рядом. Вы продолжаете идти.";
-      } else if (choice === 'left') {
-        narration.innerHTML = "Вы поворачиваете налево...\n\n☠️ Стена исчезает. Пол уходит из-под ног.\n\nКонец игры.";
-        document.querySelector(".choices").innerHTML = "<button onclick='goBack()'>Перезапустить</button>";
-      } else if (choice === 'right') {
-        narration.innerText = "Вы пытаетесь повернуть направо, но там стена. Нельзя нарушать правило.";
-      }
-    }
-  </script>
+      node_3: {
+        text: "Вы повернули направо. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_6" },
+          { text: "Повернуть налево", next: "trap_4" }
+        ]
+      },
 
-</body>
-</html>
+      node_4: {
+        text: "Вы повернули налево. Перед вами развилка.",
+        choices: [
+          { text: "Идти прямо", next: "node_7" },
+          { text: "Повернуть направо", next: "trap_5" }
+        ]
+      },
+
+      node_5: {
+        text: "Вы повернули направо. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_8" },
+          { text: "Повернуть налево", next: "trap_6" }
+        ]
+      },
+
+      node_6: {
+        text: "Вы продолжаете движение. Перед вами новый выбор.",
+        choices: [
+          { text: "Идти прямо", next: "node_9" },
+          { text: "Повернуть налево", next: "trap_7" },
+          { text: "Повернуть направо", next: "node_10" }
+        ]
+      },
+
+      node_7: {
+        text: "Вы повернули налево. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_11" },
+          { text: "Повернуть направо", next: "trap_8" }
+        ]
+      },
+
+      node_8: {
+        text: "Вы повернули направо. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_12" },
+          { text: "Повернуть налево", next: "trap_9" }
+        ]
+      },
+
+      node_9: {
+        text: "Вы продолжаете движение. Перед вами новый выбор.",
+        choices: [
+          { text: "Идти прямо", next: "node_13" },
+          { text: "Повернуть налево", next: "trap_10" },
+          { text: "Повернуть направо", next: "node_14" }
+        ]
+      },
+
+      node_10: {
+        text: "Вы повернули направо. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_15" },
+          { text: "Повернуть налево", next: "trap_11" }
+        ]
+      },
+
+      node_11: {
+        text: "Вы повернули налево. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_16" },
+          { text: "Повернуть направо", next: "trap_12" }
+        ]
+      },
+
+      node_12: {
+        text: "Вы повернули направо. Перед вами два пути.",
+        choices: [
+          { text: "Идти прямо", next: "node_17" },
+          { text: "Повернуть налево", next: "trap_13" }
+        ]
+      },
+
+      node_13: {
