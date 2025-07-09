@@ -30,6 +30,12 @@ const quests = [
     id: 5,
     title: "Башня теней",
     status: "Пауза",
+    available: false,
+  },
+  {
+    id: 6,
+    title: "Башня теней дубль для теста генераций",
+    status: "Пауза",
     available: false
   }
 ];
