@@ -4,7 +4,7 @@ const quests = [
     title: "Jurrassic World Park",
     status: "Тестирование",
     available: true,
-    file: "quest1.json"
+    file: "quests/quest1.json"
   },
   {
     id: 2,
