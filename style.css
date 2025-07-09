@@ -100,3 +100,62 @@ footer {
 .back-to-top:hover {
   background-color: #1976D2;
 }
+
+/<!-- -->
+
+.quest-card {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.quest-card:hover {
+  transform: scale(1.03);
+}
+
+.quest-title {
+  font-size: 1.4em;
+  margin: 10px 0;
+  color: #fff;
+  font-weight: bold;
+}
+
+.quest-image {
+  width: 100%;
+  max-width: 200px;
+  height: 120px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+.quest-status {
+  font-size: 0.9em;
+  color: #bbb;
+  margin-bottom: 12px;
+}
+
+.quest-card button {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quest-card button:hover {
+  background-color: #1976D2;
+}
+
