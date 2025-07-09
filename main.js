@@ -17,7 +17,7 @@ function renderQuests() {
 }
 
 function startQuest(file) {
-  window.location.href = file;
+  window.location.href = `quest.html?quest=${file}`;
 }
 
 window.onload = renderQuests;
