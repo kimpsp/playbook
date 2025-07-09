@@ -1,35 +1,35 @@
 const quests = [
   {
     id: 1,
-    title: "Лабиринт",
-    status: "Переработка",
+    title: "Jurrassic World \"Park"\",
+    status: "Тестирование",
     available: true,
     file: "quest1.html"
   },
   {
     id: 2,
     title: "Лабиринт v2",
-    status: "Доступен",
+    status: "Разработка",
     available: true,
     file: "quest2.html"
   },
   {
     id: 3,
     title: "Лабиринт v3",
-    status: "На испытаниях",
-    available: true,
-    file: "quest3.html"
+    status: "Паузы",
+    available: false
+    //file: "quest3.html"
   },
   {
     id: 4,
     title: "Проклятие болот",
-    status: "В разработке",
+    status: "Пауза",
     available: false
   },
   {
     id: 5,
     title: "Башня теней",
-    status: "В разработке",
+    status: "Пауза",
     available: false
   }
 ];
