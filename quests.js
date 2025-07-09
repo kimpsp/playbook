@@ -1,7 +1,7 @@
 const quests = [
   {
     id: 1,
-    title: "Jurrassic World \"Park"\",
+    title: "Jurrassic World Park",
     status: "Тестирование",
     available: true,
     file: "quest1.html"
