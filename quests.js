@@ -5,6 +5,7 @@ const quests = [
     status: "Тестирование",
     available: true,
     file: "quest1.json"
+    //image:"img/img.jpg" пример того как прикрутить изображение
   },
   {
     id: 2,
