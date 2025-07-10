@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Квест</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<!-- ФОН ДЛЯ МУЗЫКИ -->
 <audio id="bg-music" loop></audio>
-<button onclick="toggleMusic()">🎵</button>
-<input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
-  
-  <header>
-    <h1 id="quest-title">Загрузка...</h1>
-    <button onclick="goHome()">← Назад</button>
-  </header>
 
-  <main>
-    <p id="narration">Загрузка...</p>
-    <div id="choices"></div>
-  </main>
+<!-- ПАНЕЛЬ УПРАВЛЕНИЯ МУЗЫКОЙ -->
+<div class="audio-controls">
+  <!-- Кнопка с ID, чтобы JS мог менять состояние -->
+  <button id="music-toggle-btn" onclick="toggleMusic()">🎵</button>
+  <!-- Ползунок громкости -->
+  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
+</div>
 
-  <script src="main.js"></script>
+<!-- ШАПКА С НАЗВАНИЕМ И КНОПКОЙ НАЗАД -->
+<header>
+  <h1 id="quest-title">Загрузка...</h1>
+  <button onclick="goHome()">← Назад</button>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ КВЕСТА -->
+<main>
+  <p id="narration">Загрузка...</p>
+  <div id="choices"></div>
+</main>
+
+<!-- ПОДКЛЮЧАЕМ ГЛАВНЫЙ JS -->
+<script src="main.js"></script>
+
 </body>
 </html>
