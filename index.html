@@ -168,63 +168,95 @@
 </head>
 <body>
 
-  <!-- ШАПКА -->
-  <header>
-    <h1>Квест Book</h1>
-    
-    <!-- Меню навигации и управление музыкой -->
-    <div style="display: flex; align-items: center; gap: 20px;">
-      <nav>
-        <a href="#quests">Квесты</a>
-        <a href="#contact">Контакты</a>
-      </nav>
+ <!-- ШАПКА -->
+<header>
+  <h1>Квест Book</h1>
 
-      <!-- Управление музыкой -->
-      <div class="audio-controls">
-        <button onclick="toggleMusic()">🎵</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)"/>
-      </div>
+  <!-- Меню и управление музыкой -->
+  <div style="display: flex; align-items: center; gap: 20px;">
+    <nav>
+      <a href="#quests">Квесты</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+
+    <!-- Управление музыкой -->
+    <div class="audio-controls">
+      <!-- Кнопка с возможностью отображать состояние (воспроизведение / пауза) -->
+      <button id="music-toggle-btn">🎵</button>
+      <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
-  <main>
-    <h2>Выбери свой путь</h2>
+<!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+<main>
+  <h2>Выбери свой путь</h2>
 
-    <!-- Активные квесты -->
-    <div class="quests" id="quests"></div>
+  <!-- Активные квесты -->
+  <div class="quests" id="quests"></div>
 
-    <hr>
+  <hr>
 
-    <!-- Архив квестов -->
-    <h3>📦 Архив</h3>
-    <div class="quests" id="archive"></div>
-  </main>
+  <!-- Архив квестов -->
+  <h3>📦 Архив</h3>
+  <div class="quests" id="archive"></div>
+</main>
 
-  <!-- ПОДВАЛ -->
-  <footer id="contact">
-    <div class="footer-contact">
-      Email: none | Telegram: @_none_bot
-    </div>
-    <div class="footer-links">
-      <a href="#">Политика конфиденциальности</a>
-      <a href="#">Правила использования</a>
-      <a href="#">О проекте</a>
-    </div>
-    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Наверх</button>
-  </footer>
+<!-- ПОДВАЛ -->
+<footer id="contact">
+  <div class="footer-contact">
+    Email: none | Telegram: @_none_bot
+  </div>
+  <div class="footer-links">
+    <a href="#">Политика конфиденциальности</a>
+    <a href="#">Правила использования</a>
+    <a href="#">О проекте</a>
+  </div>
+  <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Наверх</button>
+</footer>
 
-  <!-- АУДИО проигрыватель -->
-  <!-- Фоновая музыка -->
-<audio id="bg-music" src="sounds/menu_theme_long.mp3" loop autoplay></audio>
+<!-- ФОН ДЛЯ МУЗЫКИ -->
+<audio id="bg-music" src="sounds/menu_theme_long.mp3" loop></audio>
 
-<!-- Контейнер для кнопок управления музыкой (по желанию) -->
-<div class="audio-controls">
-  <button onclick="toggleMusic()">🎵</button>
-  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
-</div>
+<!-- СКРИПТЫ -->
+<script>
+  // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-toggle-btn");
 
-  <!-- СКРИПТЫ -->
- <script src="main.js"></script>
+  // === ФУНКЦИИ ===
+
+  // Переключение музыки + изменение иконки
+  function toggleMusic() {
+    if (music.paused) {
+      music.play().catch(e => console.log("Автовоспроизведение запрещено браузером"));
+      musicBtn.textContent = "⏸️"; // Меняем на паузу
+    } else {
+      music.pause();
+      musicBtn.textContent = "🎵"; // Возвращаем воспроизведение
+    }
+  }
+
+  // Установка громкости
+  function setVolume(value) {
+    music.volume = parseFloat(value);
+  }
+
+  // Автозапуск при первом клике (обход ограничений браузера)
+  let isMusicStarted = false;
+
+  document.addEventListener("click", () => {
+    if (!isMusicStarted) {
+      music.play().catch(() => {});
+      musicBtn.textContent = "⏸️";
+      isMusicStarted = true;
+    }
+  });
+
+</script>
+
+<!-- Подключаем основной скрипт после всех элементов -->
+<script src="main.js"></script>
+
 </body>
 </html>
