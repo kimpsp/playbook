@@ -2,17 +2,133 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Квест</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      background-color: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #444;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      z-index: 100;
+    }
+
+    #narration {
+      white-space: pre-line;
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .choices button {
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      max-width: 300px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .choices button:hover {
+      background-color: #1976D2;
+    }
+  </style>
 </head>
 <body>
+
   <a href="index.html" class="back-button">← Назад</a>
-  <h1 id="quest-title"></h1>
-  <div id="story">
-    <p id="narration"></p>
+
+  <div class="container">
+    <div id="narration">Загрузка...</div>
     <div class="choices" id="choices"></div>
   </div>
-  <script src="quest-loader.js"></script>
+
+  <script>
+    // Чтение параметра ?quest=...
+    const params = new URLSearchParams(window.location.search);
+    const questFile = params.get("quest");
+
+    if (!questFile) {
+      document.getElementById("narration").innerText = "Файл квеста не указан.";
+      throw new Error("Quest file not specified.");
+    }
+
+    let nodes = {};
+    let current = "start";
+
+    // Загрузка JSON
+    fetch(`quests/${questFile}`)
+      .then(response => response.json())
+      .then(data => {
+        nodes = data;
+        showNode(current);
+      })
+      .catch(err => {
+        document.getElementById("narration").innerText = "Ошибка загрузки квеста.";
+        console.error("Ошибка:", err);
+      });
+
+    // Отображение текущего узла
+    function showNode(key) {
+      const node = nodes[key];
+      if (!node) return;
+
+      document.getElementById("narration").innerText = node.text;
+
+      const choices = document.getElementById("choices");
+      choices.innerHTML = "";
+
+      node.choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.textContent = choice.text;
+        btn.onclick = () => {
+          if (choice.next === "home") {
+            window.location.href = "index.html";
+          } else {
+            current = choice.next;
+            showNode(current);
+          }
+        };
+        choices.appendChild(btn);
+      });
+    }
+  </script>
+
 </body>
 </html>
