@@ -5,7 +5,7 @@ const quests = [
     status: "Тестирование",
     available: true,
     file: "quest1.json",
-    image: "img/img.jpg"
+    image: "img/cover_q1.jpg"
   },
   {
     id: 2,
