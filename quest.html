@@ -2,13 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Квест</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <!-- ФОН ДЛЯ МУЗЫКИ -->
-<audio id="bg-music" loop></audio>
+<audio id="bg-music" loop preload="auto"></audio>
 
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ МУЗЫКОЙ -->
 <div class="audio-controls">
@@ -32,6 +33,42 @@
 
 <!-- ПОДКЛЮЧАЕМ ГЛАВНЫЙ JS -->
 <script src="main.js"></script>
+
+<!-- ПОДКЛЮЧАЕМ УПРАВЛЕНИЕ МУЗЫКОЙ -->
+<script>
+  // === УПРАВЛЕНИЕ МУЗЫКОЙ ===
+
+  // Получаем элемент аудио
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-toggle-btn");
+
+  // Переключение музыки + изменение иконки
+  function toggleMusic() {
+    if (music.paused) {
+      music.play().catch(() => console.log("Автовоспроизведение запрещено браузером"));
+      musicBtn.textContent = "⏸️";
+    } else {
+      music.pause();
+      musicBtn.textContent = "🎵";
+    }
+  }
+
+  // Установка громкости
+  function setVolume(value) {
+    music.volume = parseFloat(value);
+  }
+
+  // Автозапуск при первом клике (обход ограничений браузера)
+  let isMusicStarted = false;
+
+  document.addEventListener("click", () => {
+    if (!isMusicStarted && music && musicBtn) {
+      music.play().catch(() => {});
+      musicBtn.textContent = "⏸️";
+      isMusicStarted = true;
+    }
+  });
+</script>
 
 </body>
 </html>
