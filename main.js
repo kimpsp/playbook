@@ -1,24 +1,35 @@
 // === 1. Глобальные переменные ===
-const questTitle = document.getElementById("quest-title");
-const narration = document.getElementById("narration");
-const choices = document.getElementById("choices");
+let current; // текущий шаг квеста
+let questData; // данные загруженного квеста
+
+// Элементы интерфейса квеста
+let questTitle, narration, choices;
+
+// Если это страница квеста — получаем элементы интерфейса
+if (window.location.pathname.endsWith("quest.html")) {
+  questTitle = document.getElementById("quest-title");
+  narration = document.getElementById("narration");
+  choices = document.getElementById("choices");
+}
+
 
 // === 2. Функция: переход на главную ===
 function goHome() {
   window.location.href = "index.html";
 }
 
+
 // === 3. Функция: отображение текущего узла квеста ===
 function showNode(key) {
   const node = questData.nodes[key];
+
   narration.textContent = node.text;
-  choices.innerHTML = ""; // очищаем предыдущие кнопки
+  choices.innerHTML = ""; // очищаем старые кнопки
 
   node.choices.forEach(choice => {
     const btn = document.createElement("button");
     btn.textContent = choice.text;
 
-    // Обработка клика по кнопке
     btn.onclick = () => {
       if (choice.next === "home") {
         goHome(); // если нужно вернуться на главную
@@ -32,6 +43,7 @@ function showNode(key) {
   });
 }
 
+
 // === 4. Функция: загрузка квеста из JSON ===
 async function loadQuest() {
   const queryParams = new URLSearchParams(window.location.search);
@@ -40,7 +52,7 @@ async function loadQuest() {
   try {
     const response = await fetch(`quests/${questFile}`);
     questData = await response.json();
-    
+
     // Устанавливаем название квеста
     questTitle.textContent = questData.title;
 
@@ -53,7 +65,7 @@ async function loadQuest() {
       });
     }
 
-    current = "start";
+    current = "start"; // начальный узел квеста
     showNode(current);
 
   } catch (error) {
@@ -61,6 +73,7 @@ async function loadQuest() {
     console.error("Ошибка загрузки квеста:", error);
   }
 }
+
 
 // === 5. Функция: рендеринг квестов на главной странице ===
 async function renderQuests() {
@@ -97,28 +110,16 @@ async function renderQuests() {
   }
 }
 
+
 // === 6. Функция: переход к выбранному квесту ===
 function startQuest(jsonFile) {
   window.location.href = `quest.html?quest=${jsonFile}`;
 }
 
+
 // === 7. Определение контекста: index.html или quest.html ===
 if (window.location.pathname.endsWith("quest.html")) {
-  loadQuest(); // если это страница квеста — загружаем его
+  loadQuest(); // загружаем квест
 } else {
-  renderQuests(); // если это главная — отрисовываем список квестов
-}
-
-function toggleMusic() {
-  const music = document.getElementById("bg-music");
-  if (music.paused) {
-    music.play();
-  } else {
-    music.pause();
-  }
-}
-
-function setVolume(value) {
-  const music = document.getElementById("bg-music");
-  music.volume = parseFloat(value);
+  renderQuests(); // отрисовываем список квестов
 }
