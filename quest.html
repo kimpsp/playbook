@@ -8,6 +8,8 @@
 <body>
 
 <audio id="bg-music" loop></audio>
+<button onclick="toggleMusic()">🎵</button>
+<input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
   
   <header>
     <h1 id="quest-title">Загрузка...</h1>
