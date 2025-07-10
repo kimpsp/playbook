@@ -1,8 +1,8 @@
 {
   "quests": [
     {
-      "title": "Название нового квеста",
-      "description": "Краткое описание квеста",
+      "title": "Jurassic World: Escape",
+      "description": "Вы Молодой специалист, попали на остров island'name', важа задача важна, но удастся ли вам ее выполнить...",
       "file": "quest1.json",
       "cover": "covers/cover_q1.jpg",
       "status": "Доступен",
