@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Квест</title>
-  <h1 id="quest-title"></h1>
   <style>
     body {
       margin: 0;
@@ -82,6 +81,9 @@
 
   <a href="index.html" class="back-button">← Назад</a>
 
+  <!-- Заголовок динамический -->
+  <h1 id="quest-title">Загрузка...</h1>
+
   <div id="loader" class="loader">Загрузка...</div>
 
   <div class="container" id="quest-container" style="display: none;">
@@ -89,6 +91,8 @@
     <div class="choices" id="choices"></div>
   </div>
 
+  <div id="loader">Загрузка...</div>
+  
   <script>
     const params = new URLSearchParams(window.location.search);
     const questFile = params.get("quest");
