@@ -92,15 +92,15 @@ async function renderQuests() {
       const newBadge = quest.new_badge ? '<div class="badge-new">Новинка</div>' : "";
 
       card.innerHTML = `
-        <div class="quest-cover">
-          ${newBadge}
-          <img src="${quest.cover}" alt="${quest.title}">
-        </div>
-        <div class="quest-title">${quest.title}</div>
-        <div class="quest-desc">${quest.description}</div>
-        <div class="quest-status">${quest.status}</div>
-        <button onclick="startQuest('${quest.file}')">Начать</button>
-      `;
+  ${newBadge}
+  <div class="quest-cover">
+    <img src="${quest.cover}" alt="${quest.title}">
+  </div>
+  <div class="quest-title">${quest.title}</div>
+  <div class="quest-desc">${quest.description}</div>
+  <div class="quest-status">${quest.status}</div>
+  <button onclick="startQuest('${quest.file}')">Начать</button>
+`;
 
       container.appendChild(card);
     });
