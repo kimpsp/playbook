@@ -105,57 +105,81 @@ footer {
 
 .quest-card {
   background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 15px;
+  border-radius: 10px;
   border: 1px solid #333;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
   transition: transform 0.2s ease;
+  text-align: left;
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  min-height: 320px;
 }
 
 .quest-card:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .quest-title {
-  font-size: 1.4em;
-  margin: 10px 0;
-  color: #fff;
-  font-weight: bold;
-}
-
-.quest-image {
-  width: 100%;
-  max-width: 200px;
-  height: 120px;
-  background-color: #2a2a2a;
-  border-radius: 8px;
+  font-size: 1.2em;
   margin-bottom: 10px;
-  background-size: cover;
-  background-position: center;
+  color: #fff;
 }
 
 .quest-status {
-  font-size: 0.9em;
-  color: #bbb;
-  margin-bottom: 12px;
+  font-size: 0.8em;
+  color: #888;
+  margin-top: auto;
 }
 
 .quest-card button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
   background-color: #2196F3;
   color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .quest-card button:hover {
   background-color: #1976D2;
 }
 
+//<!-- -->
+
+.quest-cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.quest-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.badge-new {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  background-color: #f44336;
+  color: white;
+  font-size: 0.7em;
+  padding: 5px 10px;
+  transform: rotate(45deg);
+  z-index: 2;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.quest-desc {
+  font-size: 0.9em;
+  color: #aaa;
+  margin-top: 10px;
+}
