@@ -15,6 +15,14 @@
       "cover": "covers/cover-quest2.jpg",
       "status": "Доступен",
       "new_badge": false
+    },
+    {
+      "title": "Тут новый квест",
+      "description": "Таинственный особняк в лесу...",
+      "file": "quests/quest1.html",
+      "cover": "covers/cover_q1.jpg",
+      "status": "В процессе",
+      "new_badge": true
     }
   ]
 }
