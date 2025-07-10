@@ -218,6 +218,12 @@
 <!-- ФОН ДЛЯ МУЗЫКИ -->
 <audio id="bg-music" src="sounds/menu_theme_long.mp3" loop></audio>
 
+<!-- УПРАВЛЕНИЕ МУЗЫКОЙ -->
+<div class="audio-controls">
+  <button id="music-toggle-btn" onclick="toggleMusic()">🎵</button>
+  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
+</div>
+  
 <!-- СКРИПТЫ -->
 <script>
   // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
