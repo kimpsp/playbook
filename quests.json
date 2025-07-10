@@ -12,7 +12,7 @@
       "title": "Проклятие старого замка",
       "description": "Заброшенный замок скрывает древнее зло.",
       "file": "quests/quest2.html",
-      "cover": "covers/cover-quest2.jpg",
+      "cover": "NULL",
       "status": "Доступен",
       "new_badge": false
     },
