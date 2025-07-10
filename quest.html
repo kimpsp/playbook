@@ -105,8 +105,9 @@
         if (!response.ok) throw new Error("Не удалось загрузить JSON");
         return response.json();
       })
-      .then(data => {
-        nodes = data;
+     .then(data => {
+        if (!data.nodes) throw new Error("Файл не содержит ключ 'nodes'");
+        nodes = data.nodes;
         document.getElementById("loader").style.display = "none";
         document.getElementById("quest-container").style.display = "block";
         showNode(current);
