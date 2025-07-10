@@ -184,3 +184,10 @@ footer {
   margin-top: 10px;
 }
 
+.quest-cover img {
+  width: 100%;
+  height: auto;
+  max-height: 200px; /* максимальная высота */
+  object-fit: cover; /* обрезка по пропорциям */
+  border-radius: 10px;
+}
