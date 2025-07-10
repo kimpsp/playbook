@@ -40,9 +40,22 @@ async function loadQuest() {
   try {
     const response = await fetch(`quests/${questFile}`);
     questData = await response.json();
+    
+    // Устанавливаем название квеста
     questTitle.textContent = questData.title;
-    current = "start"; // начальный узел
+
+    // Загружаем музыку, если указана в JSON
+    if (questData.music) {
+      const musicElement = document.getElementById("bg-music");
+      musicElement.src = questData.music;
+      musicElement.play().catch(e => {
+        console.log("Автовоспроизведение запрещено браузером");
+      });
+    }
+
+    current = "start";
     showNode(current);
+
   } catch (error) {
     narration.textContent = "Ошибка загрузки квеста.";
     console.error("Ошибка загрузки квеста:", error);
