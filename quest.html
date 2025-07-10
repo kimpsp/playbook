@@ -68,46 +68,61 @@
     .choices button:hover {
       background-color: #1976D2;
     }
+
+    .loader {
+      text-align: center;
+      margin-top: 100px;
+      font-size: 1.2em;
+      color: #888;
+    }
   </style>
 </head>
 <body>
 
   <a href="index.html" class="back-button">← Назад</a>
 
-  <div class="container">
-    <div id="narration">Загрузка...</div>
+  <div id="loader" class="loader">Загрузка...</div>
+
+  <div class="container" id="quest-container" style="display: none;">
+    <div id="narration">—</div>
     <div class="choices" id="choices"></div>
   </div>
 
   <script>
-    // Чтение параметра ?quest=...
     const params = new URLSearchParams(window.location.search);
     const questFile = params.get("quest");
 
     if (!questFile) {
-      document.getElementById("narration").innerText = "Файл квеста не указан.";
+      showError("Файл квеста не указан.");
       throw new Error("Quest file not specified.");
     }
 
     let nodes = {};
     let current = "start";
 
-    // Загрузка JSON
     fetch(`quests/${questFile}`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error("Не удалось загрузить JSON");
+        return response.json();
+      })
       .then(data => {
         nodes = data;
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("quest-container").style.display = "block";
         showNode(current);
       })
       .catch(err => {
-        document.getElementById("narration").innerText = "Ошибка загрузки квеста.";
-        console.error("Ошибка:", err);
+        console.error(err);
+        showError("Ошибка загрузки квеста.");
       });
 
-    // Отображение текущего узла
     function showNode(key) {
       const node = nodes[key];
-      if (!node) return;
+
+      if (!node || !node.choices) {
+        showError("Ошибка: некорректный узел квеста.");
+        return;
+      }
 
       document.getElementById("narration").innerText = node.text;
 
@@ -127,6 +142,13 @@
         };
         choices.appendChild(btn);
       });
+    }
+
+    function showError(message) {
+      document.getElementById("loader").style.display = "none";
+      const container = document.getElementById("quest-container");
+      container.style.display = "block";
+      container.innerHTML = `<p style="color:#f44336;">${message}</p>`;
     }
   </script>
 
