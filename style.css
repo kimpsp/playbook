@@ -1,3 +1,7 @@
+/* ================== */
+/* === БАЗОВЫЕ СТИЛИ === */
+/* ================== */
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -7,6 +11,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+/* Шапка сайта */
 header {
   background-color: #1f1f1f;
   padding: 15px 30px;
@@ -15,6 +21,7 @@ header {
   align-items: center;
   border-bottom: 1px solid #333;
 }
+
 header h1 {
   margin: 0;
   font-size: 1.5em;
@@ -22,14 +29,22 @@ header h1 {
   letter-spacing: 1px;
   font-weight: bold;
 }
+
 nav a {
   color: #bbb;
   text-decoration: none;
   margin-left: 15px;
 }
+
 nav a:hover {
   color: white;
 }
+
+
+/* ================== */
+/* === ОСНОВНАЯ СТРАНИЦА КВЕСТОВ === */
+/* ================== */
+
 main {
   flex: 1;
   padding: 40px 20px;
@@ -37,71 +52,24 @@ main {
   margin: 0 auto;
   text-align: center;
 }
+
 h2 {
   font-size: 2em;
   margin-bottom: 30px;
   color: #2196F3;
 }
+
+/* Сетка квестов */
 .quests {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
-.quest-card {
-  background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  transition: transform 0.2s ease;
-}
-.quest-card:hover {
-  transform: scale(1.03);
-}
-.quest-title {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  color: #fff;
-}
-.quest-status {
-  font-size: 0.9em;
-  color: #888;
-}
-.quest-card:not(:has(button)) {
-  opacity: 0.5;
-  pointer-events: none;
-}
-footer {
-  background-color: #1f1f1f;
-  padding: 20px 30px;
-  border-top: 1px solid #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.footer-links a {
-  color: #bbb;
-  text-decoration: none;
-  margin-right: 15px;
-}
-.footer-links a:hover {
-  color: white;
-}
-.back-to-top {
-  cursor: pointer;
-  background-color: #2196F3;
-  border: none;
-  padding: 10px 15px;
-  color: white;
-  border-radius: 5px;
-  font-weight: bold;
-}
-.back-to-top:hover {
-  background-color: #1976D2;
-}
 
-/<!-- -->
+
+/* ================== */
+/* === КАРТОЧКИ КВЕСТОВ === */
+/* ================== */
 
 .quest-card {
   background-color: #1e1e1e;
@@ -133,6 +101,12 @@ footer {
   margin-top: auto;
 }
 
+/* Отключенные карточки */
+.quest-card:not(:has(button)) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .quest-card button {
   margin-top: 10px;
   padding: 10px 15px;
@@ -141,13 +115,17 @@ footer {
   background-color: #2196F3;
   color: white;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .quest-card button:hover {
   background-color: #1976D2;
 }
 
-//<!-- -->
+
+/* ================== */
+/* === ОБЛОЖКИ КВЕСТОВ === */
+/* ================== */
 
 .quest-cover {
   position: relative;
@@ -159,10 +137,16 @@ footer {
 
 .quest-cover img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  height: auto;
+  max-height: 200px; /* максимальная высота */
+  object-fit: cover; /* обрезка по пропорциям */
+  border-radius: 10px;
 }
+
+
+/* ================== */
+/* === БЕЙДЖ "НОВИНКА" === */
+/* ================== */
 
 .badge-new {
   position: absolute;
@@ -175,27 +159,60 @@ footer {
   transform: rotate(45deg);
   z-index: 2;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.quest-desc {
-  font-size: 0.9em;
-  color: #aaa;
-  margin-top: 10px;
+
+/* ================== */
+/* === ПОДВАЛ И КНОПКИ === */
+/* ================== */
+
+footer {
+  background-color: #1f1f1f;
+  padding: 20px 30px;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.quest-cover img {
-  width: 100%;
-  height: auto;
-  max-height: 200px; /* максимальная высота */
-  object-fit: cover; /* обрезка по пропорциям */
-  border-radius: 10px;
+.footer-links a {
+  color: #bbb;
+  text-decoration: none;
+  margin-right: 15px;
 }
 
-#narration img {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin: 10px 0;
+.footer-links a:hover {
+  color: white;
+}
+
+.back-to-top {
+  cursor: pointer;
+  background-color: #2196F3;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.back-to-top:hover {
+  background-color: #1976D2;
+}
+
+
+/* ================== */
+/* === УПРАВЛЕНИЕ МУЗЫКОЙ === */
+/* ================== */
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audio-controls input[type="range"] {
+  width: 100px;
 }
