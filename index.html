@@ -215,7 +215,14 @@
   </footer>
 
   <!-- АУДИО проигрыватель -->
-  <audio id="bg-music" src="music.mp3" loop></audio>
+  <!-- Фоновая музыка -->
+<audio id="bg-music" src="sounds/menu_theme_long.mp3" loop autoplay></audio>
+
+<!-- Контейнер для кнопок управления музыкой (по желанию) -->
+<div class="audio-controls">
+  <button onclick="toggleMusic()">🎵</button>
+  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
+</div>
 
   <!-- СКРИПТЫ -->
  <script src="main.js"></script>
