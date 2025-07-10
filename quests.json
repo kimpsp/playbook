@@ -12,7 +12,7 @@
       "title": "Проклятие старого замка",
       "description": false,
       "file": "quests/quest2.html",
-      "cover": false,
+      "cover": ,
       "status": "Доступен",
       "new_badge": false
     },
@@ -20,7 +20,7 @@
       "title": "Тут новый квест",
       "description": false,
       "file": "quests/quest1.html",
-      "cover": false,
+      "cover": ,
       "status": "В процессе",
       "new_badge": true
     }
