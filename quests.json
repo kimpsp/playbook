@@ -1,11 +1,11 @@
 {
   "quests": [
     {
-      "title": "Падение дома Эшеров",
-      "description": "Таинственный особняк в лесу...",
-      "file": "quests/quest1.html",
-      "cover": "covers/cover_q1.jpg",
-      "status": "В процессе",
+      "title": "Название нового квеста",
+      "description": "Краткое описание квеста",
+      "file": "new_quest.json",
+      "cover": "covers/cover-new_quest.jpg",
+      "status": "Доступен",
       "new_badge": true
     },
     {
