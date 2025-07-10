@@ -1,0 +1,20 @@
+{
+  "quests": [
+    {
+      "title": "Падение дома Эшеров",
+      "description": "Таинственный особняк в лесу...",
+      "file": "quests/quest1.html",
+      "cover": "covers/cover-quest1.jpg",
+      "status": "В процессе",
+      "new_badge": true
+    },
+    {
+      "title": "Проклятие старого замка",
+      "description": "Заброшенный замок скрывает древнее зло.",
+      "file": "quests/quest2.html",
+      "cover": "covers/cover-quest2.jpg",
+      "status": "Доступен",
+      "new_badge": false
+    }
+  ]
+}
