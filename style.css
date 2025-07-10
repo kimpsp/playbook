@@ -216,3 +216,10 @@ footer {
 .audio-controls input[type="range"] {
   width: 100px;
 }
+
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
