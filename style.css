@@ -130,7 +130,8 @@ h2 {
 .quest-cover {
   position: relative;
   width: 100%;
-  height: 200px;
+  max-width: 100%;
+  height: auto;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -138,11 +139,10 @@ h2 {
 .quest-cover img {
   width: 100%;
   height: auto;
-  max-height: 200px; /* максимальная высота */
+  max-height: 300px; /* максимальная высота */
   object-fit: cover; /* обрезка по пропорциям */
   border-radius: 10px;
 }
-
 
 /* ================== */
 /* === БЕЙДЖ "НОВИНКА" === */
