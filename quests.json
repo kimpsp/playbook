@@ -3,14 +3,14 @@
     {
       "title": "Название нового квеста",
       "description": "Краткое описание квеста",
-      "file": "new_quest.json",
+      "file": "quest1.json",
       "cover": "covers/cover_q1.jpg",
       "status": "Доступен",
       "new_badge": true
     },
     {
       "title": "Проклятие старого замка",
-      "description": false,
+      "description": "",
       "file": "quests/quest2.html",
       "cover": "В разработке",
       "status": "Доступен",
@@ -18,7 +18,7 @@
     },
     {
       "title": "Тут новый квест",
-      "description": false,
+      "description": "",
       "file": "quests/quest1.html",
       "cover": "",
       "status": "В процессе",
