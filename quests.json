@@ -10,17 +10,17 @@
     },
     {
       "title": "Проклятие старого замка",
-      "description": "Заброшенный замок скрывает древнее зло.",
+      "description": false,
       "file": "quests/quest2.html",
-      "cover": "NULL",
+      "cover": false,
       "status": "Доступен",
       "new_badge": false
     },
     {
       "title": "Тут новый квест",
-      "description": "Таинственный особняк в лесу...",
+      "description": false,
       "file": "quests/quest1.html",
-      "cover": "NULL",
+      "cover": false,
       "status": "В процессе",
       "new_badge": true
     }
