@@ -218,40 +218,6 @@
   <audio id="bg-music" src="music.mp3" loop></audio>
 
   <!-- СКРИПТЫ -->
- <script>
-  // Загружаем квесты из JSON
-  fetch('quests.json')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('quests');
-      data.quests.forEach(quest => {
-        const card = document.createElement('div');
-        card.className = 'quest-card';
-
-        // Бейдж "Новинка"
-        const newBadge = quest.new_badge 
-          ? '<div class="badge-new">Новинка</div>' 
-          : '';
-
-        card.innerHTML = `
-          <div class="quest-cover">
-            ${newBadge}
-            <img src="${quest.cover}" alt="${quest.title}">
-          </div>
-          <div class="quest-title">${quest.title}</div>
-          <div class="quest-desc">${quest.description}</div>
-          <div class="quest-status">${quest.status}</div>
-          <button onclick="startQuest('${quest.file}')">Начать</button>
-        `;
-
-        container.appendChild(card);
-      });
-    })
-    .catch(err => console.error('Ошибка загрузки квестов:', err));
-
-  function startQuest(url) {
-    window.location.href = url;
-  }
-</script>
+ <script src="main.js"></script>
 </body>
 </html>
