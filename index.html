@@ -218,56 +218,40 @@
   <audio id="bg-music" src="music.mp3" loop></audio>
 
   <!-- СКРИПТЫ -->
-  <script>
-    // Загрузка JSON с квестами и динамическая отрисовка
-    fetch('quests.json')
-      .then(response => response.json())
-      .then(data => {
-        const questsContainer = document.getElementById('quests');
-        const archiveContainer = document.getElementById('archive');
+ <script>
+  // Загружаем квесты из JSON
+  fetch('quests.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('quests');
+      data.quests.forEach(quest => {
+        const card = document.createElement('div');
+        card.className = 'quest-card';
 
-        data.quests.forEach(quest => {
-          const card = document.createElement('div');
-          card.className = 'quest-card' + (quest.disabled ? ' disabled' : '');
+        // Бейдж "Новинка"
+        const newBadge = quest.new_badge 
+          ? '<div class="badge-new">Новинка</div>' 
+          : '';
 
-          card.innerHTML = `
-            <div class="quest-title">${quest.title}</div>
-            <div class="quest-status">${quest.status}</div>
-            <button ${quest.disabled ? 'disabled' : ''} onclick="startQuest('${quest.file}')">
-              ${quest.disabled ? 'Недоступен' : 'Начать'}
-            </button>
-          `;
+        card.innerHTML = `
+          <div class="quest-cover">
+            ${newBadge}
+            <img src="${quest.cover}" alt="${quest.title}">
+          </div>
+          <div class="quest-title">${quest.title}</div>
+          <div class="quest-desc">${quest.description}</div>
+          <div class="quest-status">${quest.status}</div>
+          <button onclick="startQuest('${quest.file}')">Начать</button>
+        `;
 
-          if (quest.disabled) {
-            archiveContainer.appendChild(card);
-          } else {
-            questsContainer.appendChild(card);
-          }
-        });
-      })
-      .catch(err => console.error('Ошибка загрузки квестов:', err));
+        container.appendChild(card);
+      });
+    })
+    .catch(err => console.error('Ошибка загрузки квестов:', err));
 
-    // Переход к квесту по файлу
-    function startQuest(jsonFile) {
-      window.location.href = `quest.html?quest=${jsonFile}`;
-    }
-
-    // Управление фоновой музыкой
-    const music = document.getElementById('bg-music');
-    let isPlaying = false;
-
-    function toggleMusic() {
-      if (!isPlaying) {
-        music.play().catch(e => console.log("Автовоспроизведение запрещено браузером"));
-      } else {
-        music.pause();
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function setVolume(value) {
-      music.volume = parseFloat(value); // устанавливаем громкость
-    }
-  </script>
+  function startQuest(url) {
+    window.location.href = url;
+  }
+</script>
 </body>
 </html>
