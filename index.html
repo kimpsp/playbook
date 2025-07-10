@@ -4,187 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Квест Book</title>
-  <style>
-    /* Основной стиль */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: #1f1f1f;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #333;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5em;
-      color: #f44336;
-    }
-
-    nav a {
-      color: #bbb;
-      text-decoration: none;
-      margin-left: 15px;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .audio-controls input[type=range] {
-      width: 100px;
-    }
-
-    main {
-      flex: 1;
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    h2 {
-      font-size: 2em;
-      margin-bottom: 30px;
-      color: #2196F3;
-    }
-
-    h3 {
-      font-size: 1.5em;
-      margin-top: 40px;
-      color: #999;
-    }
-
-    .quests {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-
-    .quest-card {
-      background-color: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid #333;
-      transition: transform 0.2s ease;
-    }
-
-    .quest-card:hover {
-      transform: scale(1.03);
-    }
-
-    .quest-title {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .quest-status {
-      font-size: 0.9em;
-      color: #888;
-    }
-
-    .quest-card button {
-      margin-top: 10px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      background-color: #2196F3;
-      color: white;
-      cursor: pointer;
-    }
-
-    .quest-card button:hover {
-      background-color: #1976D2;
-    }
-
-    .quest-card.disabled {
-      filter: grayscale(1);
-      opacity: 0.5;
-      transform: scale(0.95);
-    }
-
-    .quest-card.disabled button {
-      background-color: #444;
-      cursor: not-allowed;
-    }
-
-    footer {
-      background-color: #1f1f1f;
-      padding: 20px 30px;
-      border-top: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      color: #bbb;
-      text-decoration: none;
-      margin-right: 15px;
-    }
-
-    .footer-links a:hover {
-      color: white;
-    }
-
-    .back-to-top {
-      cursor: pointer;
-      background-color: #2196F3;
-      border: none;
-      padding: 10px 15px;
-      color: white;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    .back-to-top:hover {
-      background-color: #1976D2;
-    }
-
-    hr {
-      margin: 60px 0;
-      border: 1px solid #333;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
- <!-- ШАПКА -->
+<!-- ШАПКА -->
 <header>
   <h1>Квест Book</h1>
 
-  <!-- Меню и управление музыкой -->
+  <!-- Меню навигации -->
   <div style="display: flex; align-items: center; gap: 20px;">
     <nav>
       <a href="#quests">Квесты</a>
       <a href="#contact">Контакты</a>
     </nav>
-
-    <!-- Управление музыкой -->
-    <div class="audio-controls">
-      <!-- Кнопка с возможностью отображать состояние (воспроизведение / пауза) -->
-      <button id="music-toggle-btn">🎵</button>
-      <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
-    </div>
   </div>
 </header>
 
@@ -221,10 +54,12 @@
 <!-- УПРАВЛЕНИЕ МУЗЫКОЙ -->
 <div class="audio-controls">
   <button id="music-toggle-btn" onclick="toggleMusic()">🎵</button>
-  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" />
+  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
 </div>
-  
-<!-- СКРИПТЫ -->
+
+<!-- ПОДКЛЮЧЕНИЕ JS -->
+<script src="main.js" defer></script>
+
 <script>
   // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
   const music = document.getElementById("bg-music");
@@ -252,17 +87,13 @@
   let isMusicStarted = false;
 
   document.addEventListener("click", () => {
-    if (!isMusicStarted) {
+    if (!isMusicStarted && music && musicBtn) {
       music.play().catch(() => {});
       musicBtn.textContent = "⏸️";
       isMusicStarted = true;
     }
   });
-
 </script>
-
-<!-- Подключаем основной скрипт после всех элементов -->
-<script src="main.js"></script>
 
 </body>
 </html>
