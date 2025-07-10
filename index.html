@@ -105,7 +105,8 @@
 
     .quest-card.disabled {
       filter: grayscale(1);
-      opacity: 0.6;
+      opacity: 0.5;
+      transform: scale(0.95);
     }
 
     .quest-card.disabled button {
@@ -152,6 +153,13 @@
       margin: 60px 0;
       border: 1px solid #333;
     }
+
+    .audio-controls {
+      margin: 20px 0;
+    }
+    .audio-controls input[type=range] {
+      width: 150px;
+    }
   </style>
 </head>
 <body>
@@ -165,42 +173,24 @@
     </nav>
   </header>
 
-  <!-- Основное содержание -->
+  <!-- Основное содержимое -->
   <main>
     <h2>Выбери свой путь</h2>
 
-    <!-- Активные квесты -->
-    <div class="quests" id="quests">
-      <div class="quest-card">
-        <div class="quest-title">1. Лабиринт</div>
-        <div class="quest-status">Переработка</div>
-        <button onclick="startQuest(1)">Начать</button>
-      </div>
-
-      <div class="quest-card">
-        <div class="quest-title">2. Jurrassic World Park</div>
-        <div class="quest-status">Тестируется</div>
-        <button onclick="window.location.href='universe.html?world=jurrassic'">Выбрать</button>
-      </div>
-
-      <div class="quest-card">
-        <div class="quest-title">3. Новый квест</div>
-        <div class="quest-status">На испытаниях</div>
-        <button onclick="startQuest(3)">Начать</button>
-      </div>
+    <!-- Элементы управления музыкой -->
+    <div class="audio-controls">
+      <button onclick="toggleMusic()">🎵 Музыка</button>
+      <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)"/>
     </div>
+
+    <!-- Активные квесты -->
+    <div class="quests" id="quests"></div>
 
     <hr>
 
-    <!-- Архивные квесты -->
+    <!-- Архив квестов -->
     <h3>📦 Архив</h3>
-    <div class="quests">
-      <div class="quest-card disabled">
-        <div class="quest-title">Квест 2022</div>
-        <div class="quest-status">Перенесён в архив</div>
-        <button disabled>Недоступен</button>
-      </div>
-    </div>
+    <div class="quests" id="archive"></div>
   </main>
 
   <!-- Подвал -->
@@ -216,31 +206,60 @@
     <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Наверх</button>
   </footer>
 
-  <script>
-    function startQuest(id) {
-      const map = {
-        1: "quest.html?quest=quest1.json",
-        3: "quest.html?quest=quest3.json"
-      };
+  <!-- Аудио проигрыватель (скрытый) -->
+  <audio id="bg-music" src="music.mp3" loop></audio>
 
-      if (map[id]) {
-        window.location.href = map[id];
+  <!-- Скрипт загрузки квестов и логики -->
+  <script>
+    // Загрузка JSON с квестами и отрисовка
+    fetch('quests.json')
+      .then(response => response.json())
+      .then(data => {
+        const questsContainer = document.getElementById('quests');
+        const archiveContainer = document.getElementById('archive');
+
+        data.quests.forEach(quest => {
+          const card = document.createElement('div');
+          card.className = 'quest-card' + (quest.disabled ? ' disabled' : '');
+
+          card.innerHTML = `
+            <div class="quest-title">${quest.title}</div>
+            <div class="quest-status">${quest.status}</div>
+            <button ${quest.disabled ? 'disabled' : ''} onclick="startQuest('${quest.file}')">
+              ${quest.disabled ? 'Недоступен' : 'Начать'}
+            </button>
+          `;
+
+          if (quest.disabled) {
+            archiveContainer.appendChild(card);
+          } else {
+            questsContainer.appendChild(card);
+          }
+        });
+      })
+      .catch(err => console.error('Ошибка загрузки квестов:', err));
+
+    // Перейти к квесту
+    function startQuest(jsonFile) {
+      window.location.href = `quest.html?quest=${jsonFile}`;
+    }
+
+    // Музыка: включение/выключение
+    const music = document.getElementById('bg-music');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
       } else {
-        alert("Квест ещё недоступен.");
+        music.play();
       }
+      isPlaying = !isPlaying;
+    }
+
+    function setVolume(value) {
+      music.volume = value;
     }
   </script>
-
-  <script>
-  function startQuest(jsonFile) {
-    window.location.href = `quest.html?quest=${jsonFile}`;
-  }
-
-  function openUniverse(slug) {
-    window.location.href = `universe.html?u=${slug}`;
-  }
-</script>
-
-  
 </body>
 </html>
