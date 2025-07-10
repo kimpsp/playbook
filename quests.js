@@ -4,8 +4,8 @@ const quests = [
     title: "Jurrassic World Park",
     status: "Тестирование",
     available: true,
-    file: "quest1.json"
-    //image:"img/img.jpg" пример того как прикрутить изображение
+    file: "quest1.json",
+    image: "img/img.jpg"
   },
   {
     id: 2,
