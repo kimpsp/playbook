@@ -108,3 +108,17 @@ if (window.location.pathname.endsWith("quest.html")) {
 } else {
   renderQuests(); // если это главная — отрисовываем список квестов
 }
+
+function toggleMusic() {
+  const music = document.getElementById("bg-music");
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+function setVolume(value) {
+  const music = document.getElementById("bg-music");
+  music.volume = parseFloat(value);
+}
