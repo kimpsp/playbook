@@ -9,7 +9,7 @@
       "new_badge": true
     },
     {
-      "title": "Проклятие старого замка",
+      "title": "В разработке",
       "description": "",
       "file": "quests/quest2.html",
       "cover": "covers/in_progress.jpg",
@@ -17,12 +17,12 @@
       "new_badge": false
     },
     {
-      "title": "Тут новый квест",
+      "title": "В разработке 'Тест'",
       "description": "",
       "file": "quests/quest1.html",
       "cover": "covers/in_progress.jpg",
       "status": "В процессе",
-      "new_badge": true
+      "new_badge": false
     }
   ]
 }
