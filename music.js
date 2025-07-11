@@ -10,49 +10,59 @@ console.log("musicBtn:", musicBtn);
 console.log("volumeSlider:", volumeSlider);
 
 if (!music) {
-  console.warn("❌ Элемент <audio> не найден");
+  console.warn("❌ <audio id='bg-music'> не найден");
+}
+if (!musicBtn) {
+  console.warn("❌ <button id='music-toggle-btn'> не найден");
+}
+if (!volumeSlider) {
+  console.warn("❌ <input id='volume-slider'> не найден");
 }
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
-if (music && musicBtn && volumeSlider) {
+if (music) {
   // Восстанавливаем громкость из localStorage
   const savedVolume = localStorage.getItem("musicVolume");
   if (savedVolume !== null) {
     music.volume = parseFloat(savedVolume);
-    volumeSlider.value = savedVolume;
+    if (volumeSlider) volumeSlider.value = savedVolume;
   }
 
   // Восстанавливаем состояние кнопки
   const savedState = localStorage.getItem("musicState");
   if (savedState === "paused") {
     music.pause();
-    musicBtn.textContent = "🎵";
+    if (musicBtn) musicBtn.textContent = "🎵";
   } else {
-    musicBtn.textContent = "⏸️";
+    if (musicBtn) musicBtn.textContent = "⏸️";
   }
-
-  // Обработчики событий
-  musicBtn.addEventListener("click", toggleMusic);
-  volumeSlider.addEventListener("input", () => setVolume(volumeSlider.value));
-  volumeSlider.addEventListener("touchmove", () => setVolume(volumeSlider.value));
-
-  // === НОВАЯ ФУНКЦИЯ: ВКЛЮЧЕНИЕ МУЗЫКИ ПРИ КЛИКЕ НА СТРАНИЦЕ ===
-  document.addEventListener("click", handleFirstClick, { once: true });
-} else {
-  console.warn("⚠️ Не все элементы управления музыкой найдены");
 }
 
-// === ФУНКЦИИ ===
+// === ОБРАБОТЧИКИ СОБЫТИЙ ===
+
+if (musicBtn) {
+  musicBtn.addEventListener("click", toggleMusic);
+}
+
+if (volumeSlider) {
+  volumeSlider.addEventListener("input", () => setVolume(volumeSlider.value));
+  volumeSlider.addEventListener("touchmove", () => setVolume(volumeSlider.value));
+}
+
+// === НОВАЯ ФУНКЦИЯ: ВКЛЮЧЕНИЕ МУЗЫКИ ПРИ КЛИКЕ НА СТРАНИЦЕ ===
+
+document.addEventListener("click", handleFirstClick, { once: true });
 
 function handleFirstClick(event) {
-  // Проверяем, не был ли клик по управлению музыкой
   const targetIsNotAudioControl = !event.target.closest(".audio-controls");
 
-  if (!isMusicStarted && targetIsNotAudioControl) {
+  if (!isMusicStarted && targetIsNotAudioControl && music) {
     playMusic();
   }
 }
+
+// === ФУНКЦИИ ===
 
 function playMusic() {
   if (!music) return;
@@ -77,7 +87,7 @@ function toggleMusic() {
     music.play()
       .then(() => {
         localStorage.setItem("musicState", "playing");
-        musicBtn.textContent = "⏸️";
+        if (musicBtn) musicBtn.textContent = "⏸️";
       })
       .catch(() => {
         console.warn("❌ Не удалось возобновить воспроизведение");
@@ -85,7 +95,7 @@ function toggleMusic() {
   } else {
     music.pause();
     localStorage.setItem("musicState", "paused");
-    musicBtn.textContent = "🎵";
+    if (musicBtn) musicBtn.textContent = "🎵";
   }
 }
 
