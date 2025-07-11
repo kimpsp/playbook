@@ -272,3 +272,82 @@ footer {
   border-radius: 8px;
   margin: 10px 0;
 }
+
+/* ================== */
+/* === СТРАНИЦА КВЕСТА === */
+/* ================== */
+
+.quest-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.quest-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1c1c1c;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.quest-narration {
+  line-height: 1.6;
+  font-size: 1.1em;
+  color: #eee;
+  white-space: pre-wrap;
+  margin-bottom: 30px;
+  background-color: #2a2a2a;
+  padding: 15px;
+  border-left: 4px solid #2196F3;
+  border-radius: 6px;
+}
+
+.quest-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.quest-choice-button {
+  padding: 15px 20px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.quest-choice-button:hover {
+  background-color: #1976D2;
+}
+
+.quest-choice-button:disabled {
+  background-color: #444;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ================== */
+/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+/* ================== */
+
+@media (max-width: 600px) {
+  .quest-container {
+    padding: 15px;
+  }
+
+  .quest-narration {
+    font-size: 1em;
+    padding: 12px;
+  }
+
+  .quest-choice-button {
+    font-size: 0.95em;
+    padding: 12px 16px;
+  }
+}
