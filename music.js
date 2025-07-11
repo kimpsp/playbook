@@ -30,28 +30,35 @@ if (music && musicBtn) {
     musicBtn.textContent = "🎵";
   });
 
-  // Обработчики событий кнопки
+  // Обработчик кнопки
   musicBtn.addEventListener("click", toggleMusic);
 }
 
 if (volumeSlider) {
-  volumeSlider.addEventListener("input", () => {
-    setVolume(volumeSlider.value);
-  });
+  // Поддержка desktop
+  volumeSlider.addEventListener("input", handleVolumeChange);
+
+  // Поддержка mobile (touch)
+  volumeSlider.addEventListener("touchmove", handleVolumeChange);
+  volumeSlider.addEventListener("touchstart", handleVolumeChange);
 }
 
 // === ФУНКЦИИ ===
 
-/**
- * Переключает воспроизведение музыки и меняет иконку кнопки
- */
+function handleVolumeChange() {
+  if (!music) return;
+
+  const newVolume = parseFloat(volumeSlider.value);
+  music.volume = newVolume;
+  console.log("Громкость установлена:", newVolume);
+}
+
 function toggleMusic() {
   if (!music) return;
 
   if (!isPlaying) {
     music.play()
       .then(() => {
-        // Музыка играет
         isPlaying = true;
         isMusicStarted = true;
         musicBtn.textContent = "⏸️";
@@ -62,22 +69,12 @@ function toggleMusic() {
         isPlaying = false;
       });
   } else {
-    // Добавляем небольшую задержку, чтобы убедиться, что браузер успел обработать pause
     music.pause();
     setTimeout(() => {
       isPlaying = false;
       musicBtn.textContent = "🎵";
     }, 50);
   }
-}
-
-/**
- * Устанавливает громкость музыки
- * @param {string} value - значение из ползунка (0 до 1)
- */
-function setVolume(value) {
-  if (!music) return;
-  music.volume = parseFloat(value);
 }
 
 /**
