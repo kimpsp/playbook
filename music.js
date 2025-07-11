@@ -3,8 +3,8 @@ const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle-btn");
 const volumeSlider = document.querySelector(".audio-controls input[type='range']");
 
-let isMusicStarted = false; // флаг, что пользователь уже запустил музыку вручную
-let isPlaying = false; // точное состояние воспроизведения
+let isMusicStarted = false;
+let isPlaying = false;
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
@@ -14,13 +14,10 @@ if (music && musicBtn) {
     music.volume = parseFloat(volumeSlider.value);
   }
 
-  // Обработчики событий
-  musicBtn.addEventListener("click", toggleMusic);
-
-  // Обновляем состояние при ошибке или окончании
-  music.addEventListener("ended", () => {
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
+  // Слушатели событий для синхронизации состояния
+  music.addEventListener("play", () => {
+    isPlaying = true;
+    musicBtn.textContent = "⏸️";
   });
 
   music.addEventListener("pause", () => {
@@ -28,10 +25,13 @@ if (music && musicBtn) {
     musicBtn.textContent = "🎵";
   });
 
-  music.addEventListener("play", () => {
-    isPlaying = true;
-    musicBtn.textContent = "⏸️";
+  music.addEventListener("ended", () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
   });
+
+  // Обработчики событий кнопки
+  musicBtn.addEventListener("click", toggleMusic);
 }
 
 if (volumeSlider) {
@@ -51,6 +51,7 @@ function toggleMusic() {
   if (!isPlaying) {
     music.play()
       .then(() => {
+        // Музыка играет
         isPlaying = true;
         isMusicStarted = true;
         musicBtn.textContent = "⏸️";
@@ -61,9 +62,12 @@ function toggleMusic() {
         isPlaying = false;
       });
   } else {
+    // Добавляем небольшую задержку, чтобы убедиться, что браузер успел обработать pause
     music.pause();
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
+    setTimeout(() => {
+      isPlaying = false;
+      musicBtn.textContent = "🎵";
+    }, 50);
   }
 }
 
@@ -77,24 +81,8 @@ function setVolume(value) {
 }
 
 /**
- * Обновляет состояние музыки при возврате на главную
+ * Автозапуск музыки при первом клике
  */
-function resetMusicState() {
-  if (!music) return;
-
-  if (!music.src) {
-    // Если src пустой (например, после открытия квеста), восстанавливаем
-    music.src = "sounds/menu_theme_long.mp3";
-  }
-
-  // Можно автоматически продолжить воспроизведение
-  if (isPlaying) {
-    music.play().catch(() => {});
-  }
-}
-
-// === АВТО-СТАРТ ПРИ ПЕРВОМ КЛИКЕ ===
-
 document.addEventListener("click", (event) => {
   const targetIsNotAudioControl = !event.target.closest(".audio-controls");
 
@@ -108,11 +96,12 @@ document.addEventListener("click", (event) => {
       .catch((e) => {
         console.warn("Автовоспроизведение заблокировано:", e.message);
         isMusicStarted = false;
+        isPlaying = false;
       });
   }
 });
 
-// === ДОПОЛНИТЕЛЬНО: СЛЕДИМ ЗА СКРОЛЛОМ И КНОПКОЙ "НАВЕРХ" ===
+// === ДОПОЛНИТЕЛЬНО: КНОПКА "НАВЕРХ" С АНИМАЦИЕЙ ===
 
 const backToTopButton = document.querySelector(".back-to-top");
 
