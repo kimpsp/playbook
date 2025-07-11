@@ -9,7 +9,7 @@
         {"text": "Осмотреть периметр", "next": "check_perimeter"},
         {"text": "Отправиться обратно", "next": "home"}
       ],
-      "image": "covers/jurassic_start.jpg"
+      "image": "covers/in_progress.jpg"
     },
     "enter_park": {
       "text": "Вы вошли в парк. Вдалеке виден силуэт тираннозавра.",
@@ -18,7 +18,7 @@
         {"text": "Попытаться бежать", "next": "run_away"},
         {"text": "Использовать внезапный дрон", "next": "use_drone"}
       ],
-      "image": "covers/jurassic_enter.jpg"
+      "image": "covers/cover_q1.jpg"
     },
     "check_perimeter": {
       "text": "Вы обходите парк по краю и находите заброшенную сторожку с рацией.",
