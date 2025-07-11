@@ -8,19 +8,37 @@ const volumeSlider = document.getElementById("volume-slider");
 
 let isPlaying = false;
 let audioBuffer;
+let currentTrackUrl = null;
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
-// Создаём контекст при первом взаимодействии пользователя
-document.addEventListener("click", loadAndPlayAudio, { once: true });
+// Проверяем, есть ли элементы управления музыкой
+if (musicBtn && volumeSlider) {
+  // Создаём контекст при первом взаимодействии пользователя
+  document.addEventListener("click", loadAndPlayAudio, { once: true });
+}
+
+// === ФУНКЦИИ ===
 
 function loadAndPlayAudio() {
   // Инициализируем AudioContext
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
+  // Получаем URL трека из <audio> или по умолчанию
+  const audioElement = document.getElementById("bg-music");
+  currentTrackUrl = audioElement?.src || "sounds/menu_theme_long.mp3";
+
+  if (!currentTrackUrl) {
+    console.warn("Не найден источник звука");
+    return;
+  }
+
   // Загружаем аудиофайл
-  fetch("sounds/menu_theme_long.mp3")
-    .then(response => response.arrayBuffer())
+  fetch(currentTrackUrl)
+    .then(response => {
+      if (!response.ok) throw new Error("Ошибка загрузки файла");
+      return response.arrayBuffer();
+    })
     .then(data => {
       return new Promise((resolve, reject) => {
         audioContext.decodeAudioData(data, resolve, reject);
@@ -41,41 +59,42 @@ function loadAndPlayAudio() {
       // Воспроизводим
       audioSource.start();
       isPlaying = true;
-      musicBtn.textContent = "⏸️";
+      if (musicBtn) musicBtn.textContent = "⏸️";
 
       // Устанавливаем начальную громкость
-      gainNode.gain.value = parseFloat(volumeSlider.value);
+      const savedVolume = localStorage.getItem("musicVolume") || 0.5;
+      gainNode.gain.value = parseFloat(savedVolume);
+      if (volumeSlider) volumeSlider.value = savedVolume;
     })
     .catch(e => {
       console.error("Ошибка загрузки или воспроизведения аудио:", e);
     });
 }
 
-// === ФУНКЦИИ ===
-
 function toggleMusic() {
   if (!audioContext || !audioBuffer) return;
 
   if (!isPlaying) {
-    // Возобновяем воспроизведение
+    // Возобновляем воспроизведение
     audioSource = audioContext.createBufferSource();
     audioSource.buffer = audioBuffer;
     audioSource.loop = true;
     audioSource.connect(gainNode).connect(audioContext.destination);
     audioSource.start();
     isPlaying = true;
-    musicBtn.textContent = "⏸️";
+    if (musicBtn) musicBtn.textContent = "⏸️";
   } else {
     // Ставим на паузу
     audioSource.stop();
     isPlaying = false;
-    musicBtn.textContent = "🎵";
+    if (musicBtn) musicBtn.textContent = "🎵";
   }
 }
 
 function setVolume(value) {
-  if (!gainNode) return;
-  gainNode.gain.value = parseFloat(value);
+  const volumeValue = parseFloat(value);
+  if (gainNode) gainNode.gain.value = volumeValue;
+  localStorage.setItem("musicVolume", volumeValue); // Сохраняем
 }
 
 // === ОБРАБОТЧИКИ СОБЫТИЙ ===
