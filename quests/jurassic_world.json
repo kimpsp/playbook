@@ -1,6 +1,5 @@
 {
   "title": "Jurassic World: Выживание",
-  "music": "sounds/js_world_1.mp3",
   "description": "Вы попали в парк 'Jurassic World' и оказались один на один с динозаврами.",
   "nodes": {
     "start": {
@@ -108,5 +107,5 @@
       "image": "covers/jurassic_home.jpg"
     }
   },
-  "music": "sounds/jurassic_theme.mp3"
+  "music": "sounds/js_world_1.mp3"
 }
