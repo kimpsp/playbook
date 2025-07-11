@@ -1,115 +1,95 @@
 // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
-const music = document.getElementById("bg-music");
-const musicBtn = document.getElementById("music-toggle-btn");
-const volumeSlider = document.querySelector(".audio-controls input[type='range']");
+let audioContext;
+let audioSource;
+let gainNode;
 
-let isMusicStarted = false;
+const musicBtn = document.getElementById("music-toggle-btn");
+const volumeSlider = document.getElementById("volume-slider");
+
 let isPlaying = false;
+let audioBuffer;
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
-if (music && musicBtn) {
-  // Устанавливаем начальную громкость
-  if (volumeSlider) {
-    music.volume = parseFloat(volumeSlider.value);
-  }
+// Создаём контекст при первом взаимодействии пользователя
+document.addEventListener("click", loadAndPlayAudio, { once: true });
 
-  // Слушатели событий для синхронизации состояния
-  music.addEventListener("play", () => {
-    isPlaying = true;
-    musicBtn.textContent = "⏸️";
-  });
+function loadAndPlayAudio() {
+  // Инициализируем AudioContext
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-  music.addEventListener("pause", () => {
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
-  });
+  // Загружаем аудиофайл
+  fetch("sounds/menu_theme_long.mp3")
+    .then(response => response.arrayBuffer())
+    .then(data => {
+      return new Promise((resolve, reject) => {
+        audioContext.decodeAudioData(data, resolve, reject);
+      });
+    })
+    .then(buffer => {
+      audioBuffer = buffer;
 
-  music.addEventListener("ended", () => {
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
-  });
+      // Создаём источник и узел громкости
+      audioSource = audioContext.createBufferSource();
+      gainNode = audioContext.createGain();
 
-  // Обработчик кнопки
-  musicBtn.addEventListener("click", toggleMusic);
-}
+      // Настраиваем цепочку воспроизведения
+      audioSource.buffer = audioBuffer;
+      audioSource.loop = true;
+      audioSource.connect(gainNode).connect(audioContext.destination);
 
-if (volumeSlider) {
-  // Поддержка desktop
-  volumeSlider.addEventListener("input", handleVolumeChange);
+      // Воспроизводим
+      audioSource.start();
+      isPlaying = true;
+      musicBtn.textContent = "⏸️";
 
-  // Поддержка mobile (touch)
-  volumeSlider.addEventListener("touchmove", handleVolumeChange);
-  volumeSlider.addEventListener("touchstart", handleVolumeChange);
+      // Устанавливаем начальную громкость
+      gainNode.gain.value = parseFloat(volumeSlider.value);
+    })
+    .catch(e => {
+      console.error("Ошибка загрузки или воспроизведения аудио:", e);
+    });
 }
 
 // === ФУНКЦИИ ===
 
-function handleVolumeChange() {
-  if (!music) return;
-
-  const newVolume = parseFloat(volumeSlider.value);
-  music.volume = newVolume;
-  console.log("Громкость установлена:", newVolume);
-}
-
 function toggleMusic() {
-  if (!music) return;
+  if (!audioContext || !audioBuffer) return;
 
   if (!isPlaying) {
-    music.play()
-      .then(() => {
-        isPlaying = true;
-        isMusicStarted = true;
-        musicBtn.textContent = "⏸️";
-      })
-      .catch((e) => {
-        console.warn("Не удалось возобновить воспроизведение:", e.message);
-        isMusicStarted = false;
-        isPlaying = false;
-      });
+    // Возобновяем воспроизведение
+    audioSource = audioContext.createBufferSource();
+    audioSource.buffer = audioBuffer;
+    audioSource.loop = true;
+    audioSource.connect(gainNode).connect(audioContext.destination);
+    audioSource.start();
+    isPlaying = true;
+    musicBtn.textContent = "⏸️";
   } else {
-    music.pause();
-    setTimeout(() => {
-      isPlaying = false;
-      musicBtn.textContent = "🎵";
-    }, 50);
+    // Ставим на паузу
+    audioSource.stop();
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
   }
 }
 
-/**
- * Автозапуск музыки при первом клике
- */
-document.addEventListener("click", (event) => {
-  const targetIsNotAudioControl = !event.target.closest(".audio-controls");
+function setVolume(value) {
+  if (!gainNode) return;
+  gainNode.gain.value = parseFloat(value);
+}
 
-  if (!isMusicStarted && targetIsNotAudioControl) {
-    music.play()
-      .then(() => {
-        isPlaying = true;
-        isMusicStarted = true;
-        musicBtn.textContent = "⏸️";
-      })
-      .catch((e) => {
-        console.warn("Автовоспроизведение заблокировано:", e.message);
-        isMusicStarted = false;
-        isPlaying = false;
-      });
-  }
-});
+// === ОБРАБОТЧИКИ СОБЫТИЙ ===
 
-// === ДОПОЛНИТЕЛЬНО: КНОПКА "НАВЕРХ" С АНИМАЦИЕЙ ===
+if (musicBtn) {
+  musicBtn.addEventListener("click", toggleMusic);
+}
 
-const backToTopButton = document.querySelector(".back-to-top");
+if (volumeSlider) {
+  volumeSlider.addEventListener("input", () => {
+    setVolume(volumeSlider.value);
+  });
 
-if (backToTopButton) {
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      backToTopButton.style.opacity = "1";
-      backToTopButton.style.pointerEvents = "auto";
-    } else {
-      backToTopButton.style.opacity = "0";
-      backToTopButton.style.pointerEvents = "none";
-    }
+  volumeSlider.addEventListener("touchmove", () => {
+    setVolume(volumeSlider.value);
   });
 }
