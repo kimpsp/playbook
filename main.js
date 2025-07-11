@@ -80,15 +80,19 @@ async function loadQuest() {
         questData = await response.json(); // Парсим JSON
 
         // Устанавливаем заголовок квеста
-        questTitle.textContent = questData.title;
+        if (questTitle) {
+            questTitle.textContent = questData.title;
+        }
 
         // Если в квесте указана музыка — загружаем и запускаем её
         if (questData.music) {
             const musicElement = document.getElementById("bg-music");
-            musicElement.src = questData.music;
-            musicElement.play().catch(e => {
-                console.log("Автовоспроизведение запрещено браузером");
-            });
+            if (musicElement) {
+                musicElement.src = questData.music;
+                musicElement.play().catch(e => {
+                    console.log("Автовоспроизведение запрещено браузером");
+                });
+            }
         }
 
         current = "start"; // Начинаем с первого шага
@@ -96,13 +100,60 @@ async function loadQuest() {
 
     } catch (error) {
         // В случае ошибки выводим сообщение пользователю
-        narration.textContent = "Ошибка загрузки квеста.";
+        if (narration) {
+            narration.textContent = "Ошибка загрузки квеста.";
+        }
         console.error("Ошибка загрузки квеста:", error);
     }
 }
 
 
-// === 5. Функция: рендеринг квестов на главной странице ===
+// === 5. Функция: создание карточки квеста ===
+
+/**
+ * Создаёт DOM-элемент карточки квеста
+ * @param {Object} quest - объект квеста из JSON
+ * @returns {HTMLElement}
+ */
+function createQuestCard(quest) {
+    const card = document.createElement("div");
+    card.className = "quest-card";
+
+    // Бейдж "Новинка"
+    const badge = quest.new_badge ? '<div class="badge-new">Новинка</div>' : "";
+
+    // Кнопка действия
+    let buttonHTML = "";
+    switch (quest.status) {
+        case "Доступен":
+            buttonHTML = `<button onclick="startQuest('${encodeURIComponent(quest.file)}')">Начать</button>`;
+            break;
+        case "В процессе":
+            buttonHTML = `<button disabled>В разработке</button>`;
+            break;
+        case "Заблокирован":
+            buttonHTML = `<button disabled>Заблокирован</button>`;
+            break;
+        default:
+            buttonHTML = `<button onclick="startQuest('${encodeURIComponent(quest.file)}')">Начать</button>`;
+    }
+
+    card.innerHTML = `
+        ${badge}
+        <div class="quest-cover">
+            <img src="${encodeURIComponent(quest.cover)}" alt="${encodeURIComponent(quest.title)}">
+        </div>
+        <div class="quest-title">${quest.title}</div>
+        <div class="quest-desc">${quest.description || ""}</div>
+        <div class="quest-status">${quest.status}</div>
+        ${buttonHTML}
+    `;
+
+    return card;
+}
+
+
+// === 6. Функция: рендеринг квестов на главной странице ===
 
 /**
  * Загружает список квестов из quests.json и отображает их на главной
@@ -113,43 +164,13 @@ async function renderQuests() {
         const data = await response.json();
 
         const container = document.getElementById("quests");
+        if (!container) return;
+
         container.innerHTML = ""; // Очищаем предыдущие квесты
 
-        // Для каждого квеста создаём карточку
+        // Для каждого квеста создаём карточку и добавляем на страницу
         data.quests.forEach(quest => {
-            const card = document.createElement("div");
-            card.className = "quest-card";
-
-            // Бейдж "Новинка" — добавляется, если указан в JSON
-            const newBadge = quest.new_badge ? '<div class="badge-new">Новинка</div>' : "";
-
-            // Создаём разметку карточки
-            let buttonHTML = "";
-
-if (quest.status === "Доступен") {
-  buttonHTML = `<button onclick="startQuest('${quest.file}')">Начать</button>`;
-} else if (quest.status === "В процессе") {
-  buttonHTML = `<button disabled>В разработке</button>`;
-} else if (quest.status === "Заблокирован") {
-  buttonHTML = `<button disabled>Заблокирован</button>`;
-} else {
-  buttonHTML = `<button onclick="startQuest('${quest.file}')">Начать</button>`;
-}
-
-card.innerHTML = `
-  ${newBadge}
-  <div class="quest-cover">
-    <img src="${quest.cover}" alt="${quest.title}">
-  </div>
-  <div class="quest-title">${quest.title}</div>
-  <div class="quest-desc">${quest.description || ""}</div>
-  <div class="quest-status">${quest.status}</div>
-  ${buttonHTML}
-`;
-
-container.appendChild(card);
-
-            // Добавляем карточку в контейнер
+            const card = createQuestCard(quest);
             container.appendChild(card);
         });
 
@@ -159,18 +180,18 @@ container.appendChild(card);
 }
 
 
-// === 6. Функция: переход к выбранному квесту ===
+// === 7. Функция: переход к выбранному квесту ===
 
 /**
  * Переход на страницу квеста с передачей имени файла в URL
  * @param {string} jsonFile - имя JSON-файла квеста
  */
 function startQuest(jsonFile) {
-    window.location.href = `quest.html?quest=${jsonFile}`;
+    window.location.href = `quest.html?quest=${encodeURIComponent(jsonFile)}`;
 }
 
 
-// === 7. Определение контекста: index.html или quest.html ===
+// === 8. Определение контекста: index.html или quest.html ===
 
 // Автоматически определяем, какую функцию запустить
 if (window.location.pathname.endsWith("quest.html")) {
