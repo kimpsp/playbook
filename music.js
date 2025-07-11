@@ -9,24 +9,14 @@ console.log("music:", music);
 console.log("musicBtn:", musicBtn);
 console.log("volumeSlider:", volumeSlider);
 
-if (!music) {
-  console.warn("❌ <audio id='bg-music'> не найден");
-}
-if (!musicBtn) {
-  console.warn("❌ <button id='music-toggle-btn'> не найден");
-}
-if (!volumeSlider) {
-  console.warn("❌ <input id='volume-slider'> не найден");
-}
-
 // === ИНИЦИАЛИЗАЦИЯ ===
 
 if (music) {
   // Восстанавливаем громкость из localStorage
   const savedVolume = localStorage.getItem("musicVolume");
-  if (savedVolume !== null) {
+  if (savedVolume !== null && volumeSlider) {
     music.volume = parseFloat(savedVolume);
-    if (volumeSlider) volumeSlider.value = savedVolume;
+    volumeSlider.value = savedVolume;
   }
 
   // Восстанавливаем состояние кнопки
@@ -39,7 +29,7 @@ if (music) {
   }
 }
 
-// === ОБРАБОТЧИКИ СОБЫТИЙ ===
+// === ОБРАБОТЧИКИ СОБЫТИЙ (подключаются, если элементы существуют) ===
 
 if (musicBtn) {
   musicBtn.addEventListener("click", toggleMusic);
