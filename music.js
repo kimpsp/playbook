@@ -11,24 +11,32 @@ let isPlaying = false;
 if (music && musicBtn) {
   // Устанавливаем начальную громкость
   if (volumeSlider) {
-    music.volume = parseFloat(volumeSlider.value);
+    try {
+      music.volume = parseFloat(volumeSlider.value);
+    } catch (e) {
+      console.warn("Ошибка установки начальной громкости", e);
+    }
   }
 
   // Слушатели событий для синхронизации состояния
-  music.addEventListener("play", () => {
-    isPlaying = true;
-    musicBtn.textContent = "⏸️";
-  });
+  try {
+    music.addEventListener("play", () => {
+      isPlaying = true;
+      musicBtn.textContent = "⏸️";
+    });
 
-  music.addEventListener("pause", () => {
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
-  });
+    music.addEventListener("pause", () => {
+      isPlaying = false;
+      musicBtn.textContent = "🎵";
+    });
 
-  music.addEventListener("ended", () => {
-    isPlaying = false;
-    musicBtn.textContent = "🎵";
-  });
+    music.addEventListener("ended", () => {
+      isPlaying = false;
+      musicBtn.textContent = "🎵";
+    });
+  } catch (e) {
+    console.warn("Ошибка добавления слушателей событий", e);
+  }
 
   // Обработчики событий кнопки
   musicBtn.addEventListener("click", toggleMusic);
@@ -49,25 +57,31 @@ function toggleMusic() {
   if (!music) return;
 
   if (!isPlaying) {
-    music.play()
-      .then(() => {
-        // Музыка играет
-        isPlaying = true;
-        isMusicStarted = true;
-        musicBtn.textContent = "⏸️";
-      })
-      .catch((e) => {
-        console.warn("Не удалось возобновить воспроизведение:", e.message);
-        isMusicStarted = false;
-        isPlaying = false;
-      });
+    try {
+      music.play()
+        .then(() => {
+          isPlaying = true;
+          isMusicStarted = true;
+          if (musicBtn) musicBtn.textContent = "⏸️";
+        })
+        .catch((e) => {
+          console.warn("Не удалось возобновить воспроизведение:", e.message);
+          isMusicStarted = false;
+          isPlaying = false;
+        });
+    } catch (e) {
+      console.error("Ошибка при попытке запуска музыки", e);
+    }
   } else {
-    // Добавляем небольшую задержку, чтобы убедиться, что браузер успел обработать pause
-    music.pause();
-    setTimeout(() => {
-      isPlaying = false;
-      musicBtn.textContent = "🎵";
-    }, 50);
+    try {
+      music.pause();
+      setTimeout(() => {
+        isPlaying = false;
+        if (musicBtn) musicBtn.textContent = "🎵";
+      }, 50);
+    } catch (e) {
+      console.error("Ошибка при паузе", e);
+    }
   }
 }
 
@@ -77,7 +91,11 @@ function toggleMusic() {
  */
 function setVolume(value) {
   if (!music) return;
-  music.volume = parseFloat(value);
+  try {
+    music.volume = parseFloat(value);
+  } catch (e) {
+    console.warn("Ошибка установки громкости", e);
+  }
 }
 
 /**
@@ -86,18 +104,22 @@ function setVolume(value) {
 document.addEventListener("click", (event) => {
   const targetIsNotAudioControl = !event.target.closest(".audio-controls");
 
-  if (!isMusicStarted && targetIsNotAudioControl) {
+  if (!music || !targetIsNotAudioControl || isMusicStarted) return;
+
+  try {
     music.play()
       .then(() => {
         isPlaying = true;
         isMusicStarted = true;
-        musicBtn.textContent = "⏸️";
+        if (musicBtn) musicBtn.textContent = "⏸️";
       })
       .catch((e) => {
         console.warn("Автовоспроизведение заблокировано:", e.message);
         isMusicStarted = false;
         isPlaying = false;
       });
+  } catch (e) {
+    console.error("Ошибка автовоспроизведения", e);
   }
 });
 
