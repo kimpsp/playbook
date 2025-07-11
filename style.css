@@ -187,6 +187,10 @@ footer {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+
+  /* Освобождаем место под кнопкой "Наверх" и аудио-панелью */
+  padding-bottom: 70px;
+  position: relative;
 }
 
 .footer-links a {
@@ -200,6 +204,11 @@ footer {
 }
 
 .back-to-top {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001; /* выше аудио-панели */
   cursor: pointer;
   background-color: #2196F3;
   border: none;
@@ -207,6 +216,7 @@ footer {
   color: white;
   border-radius: 5px;
   font-weight: bold;
+  transition: opacity 0.3s ease;
 }
 
 .back-to-top:hover {
@@ -226,10 +236,28 @@ footer {
   align-items: center;
   gap: 10px;
   z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
 }
 
 .audio-controls input[type="range"] {
   width: 100px;
+}
+
+.audio-controls button {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: white;
+  transition: color 0.2s ease;
+}
+
+.audio-controls button:hover {
+  color: #f44336;
 }
 
 
