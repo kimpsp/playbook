@@ -1,6 +1,6 @@
 {
   "title": "Падение дома Эшеров",
-  "music": "sounds/asher_house.mp3",
+  "music": "sounds/js_world_1.mp3",
   "nodes": {
     "start": {
       "text": "Вы стоите перед домом Эшеров. Дверь полуоткрыта. Что вы делаете? ![Описание](img/house.jpg)",
