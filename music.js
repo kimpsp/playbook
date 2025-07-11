@@ -3,16 +3,35 @@ const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle-btn");
 const volumeSlider = document.querySelector(".audio-controls input[type='range']");
 
-let isMusicStarted = false;
+let isMusicStarted = false; // флаг, что пользователь уже запустил музыку вручную
+let isPlaying = false; // точное состояние воспроизведения
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
 if (music && musicBtn) {
   // Устанавливаем начальную громкость
-  music.volume = parseFloat(volumeSlider?.value || 0.5);
+  if (volumeSlider) {
+    music.volume = parseFloat(volumeSlider.value);
+  }
 
-  // Привязываем события
+  // Обработчики событий
   musicBtn.addEventListener("click", toggleMusic);
+
+  // Обновляем состояние при ошибке или окончании
+  music.addEventListener("ended", () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
+  });
+
+  music.addEventListener("pause", () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
+  });
+
+  music.addEventListener("play", () => {
+    isPlaying = true;
+    musicBtn.textContent = "⏸️";
+  });
 }
 
 if (volumeSlider) {
@@ -29,19 +48,22 @@ if (volumeSlider) {
 function toggleMusic() {
   if (!music) return;
 
-  if (music.paused) {
+  if (!isPlaying) {
     music.play()
       .then(() => {
-        musicBtn.textContent = "⏸️"; // меняем на паузу
+        isPlaying = true;
         isMusicStarted = true;
+        musicBtn.textContent = "⏸️";
       })
       .catch((e) => {
-        console.warn("Воспроизведение невозможно:", e.message);
+        console.warn("Не удалось возобновить воспроизведение:", e.message);
         isMusicStarted = false;
+        isPlaying = false;
       });
   } else {
     music.pause();
-    musicBtn.textContent = "🎵"; // возвращаем воспроизведение
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
   }
 }
 
@@ -55,17 +77,33 @@ function setVolume(value) {
 }
 
 /**
- * Автозапуск музыки при первом клике на странице
+ * Обновляет состояние музыки при возврате на главную
  */
+function resetMusicState() {
+  if (!music) return;
+
+  if (!music.src) {
+    // Если src пустой (например, после открытия квеста), восстанавливаем
+    music.src = "sounds/menu_theme_long.mp3";
+  }
+
+  // Можно автоматически продолжить воспроизведение
+  if (isPlaying) {
+    music.play().catch(() => {});
+  }
+}
+
+// === АВТО-СТАРТ ПРИ ПЕРВОМ КЛИКЕ ===
+
 document.addEventListener("click", (event) => {
-  // Проверяем, клик был ли НЕ по кнопке управления музыкой
   const targetIsNotAudioControl = !event.target.closest(".audio-controls");
 
-  if (!isMusicStarted && music && targetIsNotAudioControl) {
+  if (!isMusicStarted && targetIsNotAudioControl) {
     music.play()
       .then(() => {
-        musicBtn.textContent = "⏸️";
+        isPlaying = true;
         isMusicStarted = true;
+        musicBtn.textContent = "⏸️";
       })
       .catch((e) => {
         console.warn("Автовоспроизведение заблокировано:", e.message);
@@ -74,7 +112,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// === ДОПОЛНИТЕЛЬНО: КНОПКА "НАВЕРХ" С АНИМАЦИЕЙ ===
+// === ДОПОЛНИТЕЛЬНО: СЛЕДИМ ЗА СКРОЛЛОМ И КНОПКОЙ "НАВЕРХ" ===
 
 const backToTopButton = document.querySelector(".back-to-top");
 
