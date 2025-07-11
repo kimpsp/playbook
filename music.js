@@ -84,8 +84,15 @@ function loadAndPlayAudio() {
 }
 
 function toggleMusic() {
-  if (!audioContext || !audioBuffer) {
-    console.warn("AudioContext или буфер не готовы");
+  if (!audioContext) {
+    console.warn("AudioContext ещё не создан");
+    alert("Подождите, музыка ещё загружается...");
+    return;
+  }
+
+  if (!audioBuffer) {
+    console.warn("Аудиобуфер ещё не загружен");
+    alert("Файл музыки ещё загружается...");
     return;
   }
 
