@@ -5,7 +5,7 @@
       "description": "Вы Молодой специалист, попали на остров island'name', важа задача важна, но удастся ли вам ее выполнить...",
       "file": "quest1.json",
       "cover": "covers/cover_q1.jpg",
-      "status": "Доступен",
+      "status": "Доступен", // или "В процессе", "Заблокирован",
       "new_badge": true
     },
     {
@@ -13,7 +13,7 @@
       "description": "",
       "file": "quests/quest2.html",
       "cover": "covers/in_progress.jpg",
-      "status": "Доступен",
+      "status": "В процессе",
       "new_badge": false
     },
     {
@@ -21,7 +21,7 @@
       "description": "",
       "file": "quests/quest1.html",
       "cover": "covers/in_progress.jpg",
-      "status": "В процессе",
+      "status": "Заблокирован",
       "new_badge": false
     }
   ]
