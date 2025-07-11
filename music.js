@@ -5,6 +5,14 @@ const volumeSlider = document.getElementById("volume-slider");
 
 let isMusicStarted = false;
 
+console.log("music:", music);
+console.log("musicBtn:", musicBtn);
+console.log("volumeSlider:", volumeSlider);
+
+if (!music) {
+  console.warn("❌ Элемент <audio> не найден");
+}
+
 // === ИНИЦИАЛИЗАЦИЯ ===
 
 if (music && musicBtn && volumeSlider) {
@@ -31,24 +39,21 @@ if (music && musicBtn && volumeSlider) {
 
   // === НОВАЯ ФУНКЦИЯ: ВКЛЮЧЕНИЕ МУЗЫКИ ПРИ КЛИКЕ НА СТРАНИЦЕ ===
   document.addEventListener("click", handleFirstClick, { once: true });
+} else {
+  console.warn("⚠️ Не все элементы управления музыкой найдены");
 }
 
 // === ФУНКЦИИ ===
 
-/**
- * Первый клик на странице — запускает музыку
- */
 function handleFirstClick(event) {
+  // Проверяем, не был ли клик по управлению музыкой
   const targetIsNotAudioControl = !event.target.closest(".audio-controls");
 
-  if (!isMusicStarted && targetIsNotAudioControl && localStorage.getItem("musicState") !== "muted") {
+  if (!isMusicStarted && targetIsNotAudioControl) {
     playMusic();
   }
 }
 
-/**
- * Запуск музыки и сохранение состояния
- */
 function playMusic() {
   if (!music) return;
 
@@ -57,16 +62,14 @@ function playMusic() {
       isMusicStarted = true;
       localStorage.setItem("musicState", "playing");
       if (musicBtn) musicBtn.textContent = "⏸️";
+      console.log("✅ Музыка успешно запущена");
     })
     .catch((e) => {
-      console.warn("Автовоспроизведение заблокировано:", e.message);
+      console.warn("❌ Автовоспроизведение заблокировано:", e.message);
       isMusicStarted = false;
     });
 }
 
-/**
- * Переключает воспроизведение музыки
- */
 function toggleMusic() {
   if (!music) return;
 
@@ -77,7 +80,7 @@ function toggleMusic() {
         musicBtn.textContent = "⏸️";
       })
       .catch(() => {
-        console.warn("Не удалось возобновить воспроизведение");
+        console.warn("❌ Не удалось возобновить воспроизведение");
       });
   } else {
     music.pause();
@@ -86,9 +89,6 @@ function toggleMusic() {
   }
 }
 
-/**
- * Устанавливает громкость и сохраняет в localStorage
- */
 function setVolume(value) {
   if (!music) return;
   const volumeValue = parseFloat(value);
