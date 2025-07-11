@@ -1,97 +1,118 @@
 // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-toggle-btn");
-const volumeSlider = document.getElementById("volume-slider");
+const volumeSlider = document.querySelector(".audio-controls input[type='range']");
 
 let isMusicStarted = false;
-
-console.log("music:", music);
-console.log("musicBtn:", musicBtn);
-console.log("volumeSlider:", volumeSlider);
+let isPlaying = false;
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
-if (music) {
-  // Восстанавливаем громкость из localStorage
-  const savedVolume = localStorage.getItem("musicVolume");
-  if (savedVolume !== null && volumeSlider) {
-    music.volume = parseFloat(savedVolume);
-    volumeSlider.value = savedVolume;
+if (music && musicBtn) {
+  // Устанавливаем начальную громкость
+  if (volumeSlider) {
+    music.volume = parseFloat(volumeSlider.value);
   }
 
-  // Восстанавливаем состояние кнопки
-  const savedState = localStorage.getItem("musicState");
-  if (savedState === "paused") {
-    music.pause();
-    if (musicBtn) musicBtn.textContent = "🎵";
-  } else {
-    if (musicBtn) musicBtn.textContent = "⏸️";
-  }
-}
+  // Слушатели событий для синхронизации состояния
+  music.addEventListener("play", () => {
+    isPlaying = true;
+    musicBtn.textContent = "⏸️";
+  });
 
-// === ОБРАБОТЧИКИ СОБЫТИЙ (подключаются, если элементы существуют) ===
+  music.addEventListener("pause", () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
+  });
 
-if (musicBtn) {
+  music.addEventListener("ended", () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵";
+  });
+
+  // Обработчики событий кнопки
   musicBtn.addEventListener("click", toggleMusic);
 }
 
 if (volumeSlider) {
-  volumeSlider.addEventListener("input", () => setVolume(volumeSlider.value));
-  volumeSlider.addEventListener("touchmove", () => setVolume(volumeSlider.value));
-}
-
-// === НОВАЯ ФУНКЦИЯ: ВКЛЮЧЕНИЕ МУЗЫКИ ПРИ КЛИКЕ НА СТРАНИЦЕ ===
-
-document.addEventListener("click", handleFirstClick, { once: true });
-
-function handleFirstClick(event) {
-  const targetIsNotAudioControl = !event.target.closest(".audio-controls");
-
-  if (!isMusicStarted && targetIsNotAudioControl && music) {
-    playMusic();
-  }
+  volumeSlider.addEventListener("input", () => {
+    setVolume(volumeSlider.value);
+  });
 }
 
 // === ФУНКЦИИ ===
 
-function playMusic() {
-  if (!music) return;
-
-  music.play()
-    .then(() => {
-      isMusicStarted = true;
-      localStorage.setItem("musicState", "playing");
-      if (musicBtn) musicBtn.textContent = "⏸️";
-      console.log("✅ Музыка успешно запущена");
-    })
-    .catch((e) => {
-      console.warn("❌ Автовоспроизведение заблокировано:", e.message);
-      isMusicStarted = false;
-    });
-}
-
+/**
+ * Переключает воспроизведение музыки и меняет иконку кнопки
+ */
 function toggleMusic() {
   if (!music) return;
 
-  if (music.paused) {
+  if (!isPlaying) {
     music.play()
       .then(() => {
-        localStorage.setItem("musicState", "playing");
-        if (musicBtn) musicBtn.textContent = "⏸️";
+        // Музыка играет
+        isPlaying = true;
+        isMusicStarted = true;
+        musicBtn.textContent = "⏸️";
       })
-      .catch(() => {
-        console.warn("❌ Не удалось возобновить воспроизведение");
+      .catch((e) => {
+        console.warn("Не удалось возобновить воспроизведение:", e.message);
+        isMusicStarted = false;
+        isPlaying = false;
       });
   } else {
+    // Добавляем небольшую задержку, чтобы убедиться, что браузер успел обработать pause
     music.pause();
-    localStorage.setItem("musicState", "paused");
-    if (musicBtn) musicBtn.textContent = "🎵";
+    setTimeout(() => {
+      isPlaying = false;
+      musicBtn.textContent = "🎵";
+    }, 50);
   }
 }
 
+/**
+ * Устанавливает громкость музыки
+ * @param {string} value - значение из ползунка (0 до 1)
+ */
 function setVolume(value) {
   if (!music) return;
-  const volumeValue = parseFloat(value);
-  music.volume = volumeValue;
-  localStorage.setItem("musicVolume", volumeValue);
+  music.volume = parseFloat(value);
+}
+
+/**
+ * Автозапуск музыки при первом клике
+ */
+document.addEventListener("click", (event) => {
+  const targetIsNotAudioControl = !event.target.closest(".audio-controls");
+
+  if (!isMusicStarted && targetIsNotAudioControl) {
+    music.play()
+      .then(() => {
+        isPlaying = true;
+        isMusicStarted = true;
+        musicBtn.textContent = "⏸️";
+      })
+      .catch((e) => {
+        console.warn("Автовоспроизведение заблокировано:", e.message);
+        isMusicStarted = false;
+        isPlaying = false;
+      });
+  }
+});
+
+// === ДОПОЛНИТЕЛЬНО: КНОПКА "НАВЕРХ" С АНИМАЦИЕЙ ===
+
+const backToTopButton = document.querySelector(".back-to-top");
+
+if (backToTopButton) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTopButton.style.opacity = "1";
+      backToTopButton.style.pointerEvents = "auto";
+    } else {
+      backToTopButton.style.opacity = "0";
+      backToTopButton.style.pointerEvents = "none";
+    }
+  });
 }
