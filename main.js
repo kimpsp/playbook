@@ -124,16 +124,30 @@ async function renderQuests() {
             const newBadge = quest.new_badge ? '<div class="badge-new">Новинка</div>' : "";
 
             // Создаём разметку карточки
-            card.innerHTML = `
-                ${newBadge}
-                <div class="quest-cover">
-                    <img src="${quest.cover}" alt="${quest.title}">
-                </div>
-                <div class="quest-title">${quest.title}</div>
-                <div class="quest-desc">${quest.description}</div>
-                <div class="quest-status">${quest.status}</div>
-                <button onclick="startQuest('${quest.file}')">Начать</button>
-            `;
+            let buttonHTML = "";
+
+if (quest.status === "Доступен") {
+  buttonHTML = `<button onclick="startQuest('${quest.file}')">Начать</button>`;
+} else if (quest.status === "В процессе") {
+  buttonHTML = `<button disabled>В разработке</button>`;
+} else if (quest.status === "Заблокирован") {
+  buttonHTML = `<button disabled>Заблокирован</button>`;
+} else {
+  buttonHTML = `<button onclick="startQuest('${quest.file}')">Начать</button>`;
+}
+
+card.innerHTML = `
+  ${newBadge}
+  <div class="quest-cover">
+    <img src="${quest.cover}" alt="${quest.title}">
+  </div>
+  <div class="quest-title">${quest.title}</div>
+  <div class="quest-desc">${quest.description || ""}</div>
+  <div class="quest-status">${quest.status}</div>
+  ${buttonHTML}
+`;
+
+container.appendChild(card);
 
             // Добавляем карточку в контейнер
             container.appendChild(card);
