@@ -7,7 +7,6 @@ let isMusicStarted = false;
 
 // === ИНИЦИАЛИЗАЦИЯ ===
 
-// Проверяем, есть ли элементы управления музыкой
 if (music && musicBtn && volumeSlider) {
   // Восстанавливаем громкость из localStorage
   const savedVolume = localStorage.getItem("musicVolume");
@@ -27,26 +26,29 @@ if (music && musicBtn && volumeSlider) {
 
   // Обработчики событий
   musicBtn.addEventListener("click", toggleMusic);
-  volumeSlider.addEventListener("input", () => {
-    setVolume(volumeSlider.value);
-  });
+  volumeSlider.addEventListener("input", () => setVolume(volumeSlider.value));
+  volumeSlider.addEventListener("touchmove", () => setVolume(volumeSlider.value));
 
-  volumeSlider.addEventListener("touchmove", () => {
-    setVolume(volumeSlider.value);
-  });
-
-  // Первый клик запускает музыку (для iOS)
-  document.addEventListener("click", (event) => {
-    const targetIsNotAudioControl = !event.target.closest(".audio-controls");
-
-    if (!isMusicStarted && targetIsNotAudioControl) {
-      playMusic();
-    }
-  }, { once: true });
+  // === НОВАЯ ФУНКЦИЯ: ВКЛЮЧЕНИЕ МУЗЫКИ ПРИ КЛИКЕ НА СТРАНИЦЕ ===
+  document.addEventListener("click", handleFirstClick, { once: true });
 }
 
 // === ФУНКЦИИ ===
 
+/**
+ * Первый клик на странице — запускает музыку
+ */
+function handleFirstClick(event) {
+  const targetIsNotAudioControl = !event.target.closest(".audio-controls");
+
+  if (!isMusicStarted && targetIsNotAudioControl && localStorage.getItem("musicState") !== "muted") {
+    playMusic();
+  }
+}
+
+/**
+ * Запуск музыки и сохранение состояния
+ */
 function playMusic() {
   if (!music) return;
 
@@ -62,6 +64,9 @@ function playMusic() {
     });
 }
 
+/**
+ * Переключает воспроизведение музыки
+ */
 function toggleMusic() {
   if (!music) return;
 
@@ -81,6 +86,9 @@ function toggleMusic() {
   }
 }
 
+/**
+ * Устанавливает громкость и сохраняет в localStorage
+ */
 function setVolume(value) {
   if (!music) return;
   const volumeValue = parseFloat(value);
