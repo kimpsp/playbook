@@ -66,25 +66,23 @@
   </div>
 
   <!-- Кнопка "Наверх" -->
-  <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ Наверх</button>
+  <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Вернуться наверх">↑ Наверх</button>
+
+  <!-- УПРАВЛЕНИЕ МУЗЫКОЙ внутри футера -->
+  <div class="audio-controls" id="audio-controls">
+    <!-- Кнопка управления воспроизведением -->
+    <button id="music-toggle-btn" onclick="toggleMusic()" aria-label="Включить/выключить фоновую музыку">🎵</button>
+
+    <!-- Ползунок громкости -->
+    <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)" aria-label="Громкость музыки">
+  </div>
 </footer>
 
 <!-- АУДИО ЭЛЕМЕНТ (фоновая музыка) -->
 <audio id="bg-music" src="sounds/menu_theme_long.mp3" loop></audio>
 
-<!-- УПРАВЛЕНИЕ МУЗЫКОЙ -->
-<div class="audio-controls">
-  <!-- Кнопка управления воспроизведением -->
-  <button id="music-toggle-btn" onclick="toggleMusic()">🎵</button>
-
-  <!-- Ползунок громкости -->
-  <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
-</div>
-
-<!-- Подключаем главный JS -->
+<!-- Подключаем JS -->
 <script src="main.js" defer></script>
-
-<!-- Подключаем JS для управления музыкой -->
 <script src="music.js" defer></script>
 
 </body>
