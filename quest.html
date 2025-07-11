@@ -26,9 +26,20 @@
 </header>
 
 <!-- ОСНОВНОЙ КОНТЕНТ КВЕСТА -->
-<main>
-  <p id="narration">Загрузка...</p>
-  <div id="choices"></div>
+<main class="quest-main">
+  <div class="quest-container">
+    <!-- Заголовок квеста -->
+    <h1 id="quest-title">Загрузка...</h1>
+
+    <!-- Изображение шага квеста -->
+    <img id="quest-image" src="" alt="Картинка квеста" style="display: none; max-width: 100%; border-radius: 10px;">
+
+    <!-- Текст квеста -->
+    <div id="narration" class="quest-narration">Загрузка...</div>
+
+    <!-- Варианты выбора -->
+    <div id="choices" class="quest-choices"></div>
+  </div>
 </main>
 
 <!-- ПОДКЛЮЧАЕМ ГЛАВНЫЙ JS -->
