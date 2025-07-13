@@ -13,9 +13,7 @@
 
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ МУЗЫКОЙ -->
 <div class="audio-controls">
-  <!-- Кнопка с ID, чтобы JS мог менять состояние -->
   <button id="music-toggle-btn" onclick="toggleMusic()">🎵</button>
-  <!-- Ползунок громкости -->
   <input type="range" min="0" max="1" step="0.01" value="0.3" onchange="setVolume(this.value)" />
 </div>
 
@@ -28,8 +26,6 @@
 <!-- ОСНОВНОЙ КОНТЕНТ КВЕСТА -->
 <main class="quest-main">
   <div class="quest-container">
-    <!-- Заголовок квеста -->
-    <h1 id="quest-title">Загрузка...</h1>
 
     <!-- Изображение шага квеста -->
     <img id="quest-image" src="" alt="Картинка квеста" style="display: none; max-width: 100%; border-radius: 10px;">
@@ -48,12 +44,9 @@
 <!-- ПОДКЛЮЧАЕМ УПРАВЛЕНИЕ МУЗЫКОЙ -->
 <script>
   // === УПРАВЛЕНИЕ МУЗЫКОЙ ===
-
-  // Получаем элемент аудио
   const music = document.getElementById("bg-music");
   const musicBtn = document.getElementById("music-toggle-btn");
 
-  // Переключение музыки + изменение иконки
   function toggleMusic() {
     if (music.paused) {
       music.play().catch(() => console.log("Автовоспроизведение запрещено браузером"));
@@ -64,14 +57,11 @@
     }
   }
 
-  // Установка громкости
   function setVolume(value) {
     music.volume = parseFloat(value);
   }
 
-  // Автозапуск при первом клике (обход ограничений браузера)
   let isMusicStarted = false;
-
   document.addEventListener("click", () => {
     if (!isMusicStarted && music && musicBtn) {
       music.play().catch(() => {});
