@@ -4,7 +4,7 @@
   "music": "sounds/js_world_1.mp3",
   "nodes": {
     "start": {
-      "image": "img/KNOAL0csSmujjVwX19M9IA.webp"
+      "image": "img/KNOAL0csSmujjVwX19M9IA.webp",
       "text": "Вы проснулись на заброшенном острове. Кругом — джунгли и звуки странных существ. Ваша задача — выжить и найти выход.",
       "choices": [
         {
