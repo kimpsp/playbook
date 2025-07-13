@@ -1,7 +1,7 @@
 {
   "title": "Jurassic World: Escape",
   "startNode": "start",
-  "music": "sounds/dinosaurs.mp3",
+  "music": "sounds/js_world_1.mp3",
   "nodes": {
     "start": {
       "image": "img/KNOAL0csSmujjVwX19M9IA.webp"
