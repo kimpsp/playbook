@@ -32,7 +32,7 @@
       ]
     },
     "step_camp": {
-      "image": "img/in_progress.jpg",
+      "image": "covers/in_progress.jpg",
       "text": "Лагерь разрушен. Тут валяются обрывки карты. Возможно, это подскажет путь к спасению.",
       "choices": [
         {
