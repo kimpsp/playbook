@@ -44,6 +44,7 @@ function showNode(key) {
     node.choices.forEach(choice => {
         const btn = document.createElement("button");
         btn.textContent = choice.text;
+        btn.classList.add("quest-choice-button"); // ✅ Применяем стиль
 
         // Обработчик клика на кнопку выбора
         btn.onclick = () => {
@@ -80,7 +81,7 @@ async function loadQuest() {
         questData = await response.json(); // Парсим JSON
 
         // Устанавливаем заголовок квеста
-        if (questTitle) {
+        if (questTitle && questData.title) {
             questTitle.textContent = questData.title;
         }
 
