@@ -40,6 +40,17 @@ function showNode(key) {
     narration.textContent = node.text; // Выводим текст квеста
     choices.innerHTML = ""; // Очищаем старые кнопки
 
+    // === НОВАЯ ЛОГИКА: ПОДДЕРЖКА ИЗОБРАЖЕНИЙ ===
+    const questImage = document.getElementById("quest-image");
+    if (questImage) {
+        if (node.image) {
+            questImage.src = node.image;
+            questImage.style.display = "block";
+        } else {
+            questImage.style.display = "none";
+        }
+    }
+
     // Проходим по вариантам выбора и создаём кнопки
     node.choices.forEach(choice => {
         const btn = document.createElement("button");
@@ -59,8 +70,6 @@ function showNode(key) {
         choices.appendChild(btn);
     });
 }
-
-
 // === 4. Функция: загрузка квеста из JSON ===
 
 /**
