@@ -208,7 +208,7 @@ footer {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1001; /* выше аудио-панели */
+  z-index: 1001;
   cursor: pointer;
   background-color: #2196F3;
   border: none;
@@ -273,6 +273,7 @@ footer {
   margin: 10px 0;
 }
 
+
 /* ================== */
 /* === СТРАНИЦА КВЕСТА === */
 /* ================== */
@@ -311,8 +312,8 @@ footer {
 }
 
 .quest-choice-button {
-  padding: 15px 20px;
-  background-color: #2196F3;
+  padding: 18px 20px;
+  background-color: #1976D2;
   color: white;
   border: none;
   border-radius: 8px;
@@ -320,10 +321,11 @@ footer {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  width: 100%;
 }
 
 .quest-choice-button:hover {
-  background-color: #1976D2;
+  background-color: #1565C0;
 }
 
 .quest-choice-button:disabled {
@@ -331,6 +333,7 @@ footer {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
 
 /* ================== */
 /* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
@@ -346,18 +349,8 @@ footer {
     padding: 12px;
   }
 
- .quest-choice-button {
-  padding: 18px 20px; /* Увеличили внутренние отступы = больше высота */
-  background-color: #1976D2; /* Цвет как у кнопок на главной */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.quest-choice-button:hover {
-  background-color: #1565C0; /* Темнее при наведении */
+  .quest-choice-button {
+    font-size: 1em;
+    padding: 16px 18px;
+  }
 }
