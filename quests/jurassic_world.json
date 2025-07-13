@@ -18,7 +18,7 @@
       ]
     },
     "step_beach": {
-      "image": "covers/cover_q1.jpg"
+      "image": "covers/cover_q1.jpg",
       "text": "Вы дошли до пляжа. На песке видны следы... кто-то был здесь совсем недавно.",
       "choices": [
         {
@@ -32,7 +32,7 @@
       ]
     },
     "step_camp": {
-      "image": "img/in_progress.jpg"
+      "image": "img/in_progress.jpg",
       "text": "Лагерь разрушен. Тут валяются обрывки карты. Возможно, это подскажет путь к спасению.",
       "choices": [
         {
