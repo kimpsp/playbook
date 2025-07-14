@@ -9,9 +9,17 @@
       "new_badge": true
     },
     {
+      "title": "Тест",
+      "description": "",
+      "file": "jurassic_world_1.json",
+      "cover": "covers/in_progress.jpg",
+      "status": "Доступен",
+      "new_badge": false
+    },
+     {
       "title": "В разработке",
       "description": "",
-      "file": "quests/quest2.html",
+      "file": "jurassic_world_1.json",
       "cover": "covers/in_progress.jpg",
       "status": "В процессе",
       "new_badge": false
