@@ -19,6 +19,14 @@
      {
       "title": "В разработке",
       "description": "",
+      "file": "jurassic_q2.json",
+      "cover": "covers/in_progress.jpg",
+      "status": "Доступен",
+      "new_badge": false
+    },
+    {
+      "title": "В разработке",
+      "description": "",
       "file": "jurassic_world_1.json",
       "cover": "covers/in_progress.jpg",
       "status": "В процессе",
