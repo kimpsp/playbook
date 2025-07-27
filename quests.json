@@ -18,11 +18,11 @@
     },
      {
       "title": "В разработке",
-      "description": "",
+      "description": "Новый вариант разрбаотки квеста",
       "file": "jurassic_q2.json",
       "cover": "covers/in_progress.jpg",
       "status": "Доступен",
-      "new_badge": false
+      "new_badge": true
     },
     {
       "title": "В разработке",
