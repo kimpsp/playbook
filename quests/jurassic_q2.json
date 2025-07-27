@@ -1,7 +1,7 @@
 {
   "title": "Jurassic World: Путь Контролёра",
   "startNode": "start",
-  "music": "sounds/js_world_2.mp3",
+  "music": "sounds/js_world_1.mp3",
   "nodes": {
     "start": {
       "image": "img/start_jurassic.jpg",
