@@ -92,8 +92,8 @@
           "next": "step_follow_raptors"
         },
         {
-          "text": "Укрыться в ближайшем здании",
-          "next": "step_hide_in_building"
+          "text": "Вернуться к старту",
+          "next": "start"
         }
       ]
     },
@@ -258,8 +258,8 @@
           "next": "win_controller"
         },
         {
-          "text": "Отключить систему",
-          "next": "step_stay_and_watch"
+          "text": "Отключить систему и уйти",
+          "next": "step_research_center"
         }
       ]
     },
