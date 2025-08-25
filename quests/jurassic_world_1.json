@@ -1,241 +1,515 @@
 {
-  "title": "Jurassic World: Escape from Nublar",
-  "startNode": "start",
+  "version": "1.2",
+  "title": "Jurassic World: Escape",
+  "author": "K1mps",
+  "description": "Вы оказались на заброшенном острове, населённом динозаврами. Ваша цель — выжить и найти способ сбежать!",
+  "tags": ["приключение", "выживание", "динозавры", "квест"],
+  "default_image": "img/default_scene.webp",
+  "default_music": "sounds/default_theme.mp3",
   "music": "sounds/js_world_1.mp3",
+  "startNode": "start",
+
+  "inventory": [
+    {
+      "id": "map",
+      "name": "Карта острова",
+      "description": "Помогает ориентироваться в джунглях и находить ключевые точки."
+    },
+    {
+      "id": "drone",
+      "name": "Дрон",
+      "description": "Может передавать сигнал или отвлекать хищников."
+    },
+    {
+      "id": "key",
+      "name": "Ключ от катера",
+      "description": "Нужен, чтобы запустить спасательный катер."
+    },
+    {
+      "id": "food",
+      "name": "Еда",
+      "description": "Восстанавливает силы."
+    }
+  ],
+
+  "states": {
+    "drone_active": false,
+    "map_found": false,
+    "key_found": false,
+    "food_found": false,
+    "health": 100
+  },
+
   "nodes": {
     "start": {
-      "image": "img/start_jurassic.jpg",
-      "text": "Вы — молодой специалист парка Jurassic World. Система безопасности дала сбой, Индоминус Рекс на свободе. Паника. Вы оказались у вольеров птеранодонов, один на один с хаосом.",
+      "image": "img/start_scene.webp",
+      "text": "Вы просыпаетесь на пляже заброшенного острова. Вокруг — джунгли, а вдали слышатся странные звуки. Ваша задача — выжить и найти способ сбежать с острова.",
       "choices": [
         {
-          "text": "Попробовать завести джип",
-          "next": "step_start_car"
+          "text": "Исследовать джунгли",
+          "next": "jungle"
         },
         {
-          "text": "Спрятаться в бетонной трубе",
-          "next": "step_hide_pipe"
+          "text": "Осмотреть пляж",
+          "next": "beach"
         },
         {
-          "text": "Попытаться восстановить сигнал коммуникатора",
-          "next": "step_fix_radio"
+          "text": "Остаться на месте и подождать помощи",
+          "next": "wait_for_help"
         }
       ]
     },
 
-    "step_start_car": {
-      "image": "img/car_started.jpg",
-      "text": "Джип завёлся! Но из-за угла выскакивает стая рапторов. Куда ехать?",
+    "jungle": {
+      "image": "img/jungle_scene.webp",
+      "text": "Вы вошли в густые джунгли. Ветви деревьев закрывают солнце, а звуки динозавров становятся громче. Что делать?",
       "choices": [
         {
-          "text": "Направо — к исследовательскому центру",
-          "next": "step_research_center"
+          "text": "Искать следы людей",
+          "next": "find_tracks"
         },
         {
-          "text": "Налево — в лес со стегозаврами",
-          "next": "step_forest"
+          "text": "Поискать еду",
+          "next": "search_food"
+        },
+        {
+          "text": "Вернуться на пляж",
+          "next": "beach"
         }
       ]
     },
 
-    "step_hide_pipe": {
-      "image": "img/pipe_hide.jpg",
-      "text": "Вы прячетесь в трубе. Внезапно слышите шаги... что-то большое подходит.",
+    "beach": {
+      "image": "img/beach_scene.webp",
+      "text": "Вы на пляже. Волны тихо плещутся о берег, а на песке видны следы. Возможно, здесь есть что-то полезное.",
       "choices": [
         {
-          "text": "Оставаться внутри и молчать",
-          "next": "step_inside_pipe"
+          "text": "Искать предметы на пляже",
+          "next": "search_beach"
         },
         {
-          "text": "Выбраться через задний конец",
-          "next": "step_escape_pipe"
+          "text": "Попробовать построить плот",
+          "next": "build_raft",
+          "conditions": [
+            {
+              "type": "check_inventory",
+              "item": "food",
+              "value": true
+            }
+          ]
         },
         {
-          "text": "Сделать шум и отвлечь внимание",
-          "next": "step_make_noise"
+          "text": "Вернуться в джунгли",
+          "next": "jungle"
         }
       ]
     },
 
-    "step_inside_pipe": {
-      "image": "img/pipe_inside.jpg",
-      "text": "Тварь обнюхивает трубу. Это индоминус. Он не может тебя увидеть, но чувствует запах. Через несколько минут он уходит.",
+    "wait_for_help": {
+      "image": "img/wait_scene.webp",
+      "text": "Вы решили остаться на месте и ждать помощи. Ночь приближается, и звуки динозавров становятся всё громче...",
       "choices": [
         {
-          "text": "Выйти и найти другой путь",
-          "next": "step_find_way"
+          "text": "Попробовать разжечь костёр",
+          "next": "make_fire"
+        },
+        {
+          "text": "Спрятаться в кустах",
+          "next": "hide_in_bushes"
         }
       ]
     },
 
-    "step_escape_pipe": {
-      "image": "img/pipe_escape.jpg",
-      "text": "Вы выползаете и оказываетесь в густом кустарнике. Отсюда виден другой путь — к терминалу эвакуации. Но вы слышите рык раптора где-то рядом.",
+    "find_tracks": {
+      "image": "img/tracks_scene.webp",
+      "text": "Вы нашли следы людей! Они ведут к разрушенному лагерю. Возможно, там есть что-то полезное.",
       "choices": [
         {
-          "text": "Попытаться найти укрытие",
-          "next": "step_hide_bushes"
+          "text": "Исследовать лагерь",
+          "next": "explore_camp"
         },
         {
-          "text": "Бежать к терминалу",
-          "next": "step_terminal"
-        },
-        {
-          "text": "Использовать остатки коммуникатора для связи",
-          "next": "step_communicator"
+          "text": "Вернуться на пляж",
+          "next": "beach"
         }
       ]
     },
 
-    "step_make_noise": {
-      "image": "img/make_noise.jpg",
-      "text": "Вы хлопаете крышкой или бросаете камень. Индоминус реагирует и уходит по направлению к шуму. У вас есть время скрыться.",
+    "search_food": {
+      "image": "img/food_scene.webp",
+      "text": "Вы нашли немного фруктов и ягод. Они выглядят съедобными, но кто знает, что ещё может быть в этих джунглях?",
       "choices": [
         {
-          "text": "Найти поврежденный внедорожник",
-          "next": "step_old_car"
+          "text": "Собрать еду",
+          "next": "collect_food",
+          "actions": [
+            {
+              "type": "add_inventory",
+              "item": "food"
+            },
+            {
+              "type": "set_state",
+              "state": "food_found",
+              "value": true
+            }
+          ]
         },
         {
-          "text": "Бежать к побережью",
-          "next": "step_run_to_beach"
+          "text": "Оставить всё как есть",
+          "next": "jungle"
         }
       ]
     },
 
-    "step_find_way": {
-      "image": "img/find_way.jpg",
-      "text": "Вы выходите из трубы. Джип уже занят другим человеком — сотрудник парка спасается на нём. Ты остаешься один. Начинается новая ветка: выживание в одиночку в парке.",
+    "search_beach": {
+      "image": "img/search_beach_scene.webp",
+      "text": "Вы нашли обломки старого плота и ржавый ключ. Возможно, это ключ от катера?",
       "choices": [
         {
-          "text": "Продолжить путь пешком",
-          "next": "step_walk_alone"
+          "text": "Взять ключ",
+          "next": "take_key",
+          "actions": [
+            {
+              "type": "add_inventory",
+              "item": "key"
+            },
+            {
+              "type": "set_state",
+              "state": "key_found",
+              "value": true
+            }
+          ]
         },
         {
-          "text": "Найти укрытие",
-          "next": "step_hide_bushes"
+          "text": "Оставить ключ на месте",
+          "next": "beach"
         }
       ]
     },
 
-    "step_old_car": {
-      "image": "img/old_car.jpg",
-      "text": "Вы находите повреждённый внедорожник без ключей. Перед вами развилка: попытаться его взломать или бежать пешком к побережью.",
+    "explore_camp": {
+      "image": "img/camp_scene.webp",
+      "text": "Лагерь разрушен, но здесь лежит карта острова и дрон. Карта может помочь найти выход, а дрон — подать сигнал бедствия.",
       "choices": [
         {
-          "text": "Взломать машину",
-          "next": "step_break_car"
+          "text": "Взять карту",
+          "next": "take_map",
+          "actions": [
+            {
+              "type": "add_inventory",
+              "item": "map"
+            },
+            {
+              "type": "set_state",
+              "state": "map_found",
+              "value": true
+            }
+          ]
         },
         {
-          "text": "Бежать пешком",
-          "next": "step_run_to_beach"
+          "text": "Взять дрон",
+          "next": "take_drone",
+          "actions": [
+            {
+              "type": "add_inventory",
+              "item": "drone"
+            }
+          ]
+        },
+        {
+          "text": "Вернуться на пляж",
+          "next": "beach"
         }
       ]
     },
 
-    "step_break_car": {
-      "image": "img/break_car.jpg",
-      "text": "Вы успешно заводите машину методом замыкания проводов. Теперь нужно решить: куда ехать.",
+    "take_map": {
+      "text": "Вы взяли карту. Теперь вы знаете, где находится пещера с катером!",
       "choices": [
         {
-          "text": "К побережью",
-          "next": "step_go_to_beach"
+          "text": "Идти к пещере",
+          "next": "go_to_cave"
         },
         {
-          "text": "К исследовательскому центру",
-          "next": "step_research_center"
+          "text": "Вернуться в лагерь",
+          "next": "explore_camp"
         }
       ]
     },
 
-    "step_communicator": {
-      "image": "img/radio_fixed.jpg",
-      "text": "Вы находите источник сигнала. Это старый серверный блок. На нём — данные о 'Проекте Иблис'. Получаете возможность начать альтернативную сюжетную линию.",
+    "take_drone": {
+      "text": "Вы взяли дрон. Теперь вы можете использовать его для подачи сигнала бедствия.",
       "choices": [
         {
-          "text": "Забрать данные и идти дальше",
-          "next": "step_carry_data"
+          "text": "Запустить дрон",
+          "next": "launch_drone"
         },
         {
-          "text": "Уничтожить устройство",
-          "next": "step_destroy_device"
+          "text": "Вернуться в лагерь",
+          "next": "explore_camp"
         }
       ]
     },
 
-    "step_carry_data": {
-      "image": "img/data_stolen.jpg",
-      "text": "Вы берете данные с собой. Теперь вы знаете больше, чем просто выживший.",
+    "launch_drone": {
+      "text": "Дрон взлетел и начал передавать сигнал. Но шум привлёк внимание хищника!",
       "choices": [
         {
-          "text": "Идти к побережью",
-          "next": "step_go_to_beach"
+          "text": "Спрятаться",
+          "next": "hide_from_predator"
         },
         {
-          "text": "Искать других сотрудников",
-          "next": "step_find_people"
+          "text": "Бежать к пещере",
+          "next": "run_to_cave"
         }
       ]
     },
 
-    "step_destroy_device": {
-      "image": "img/device_destroyed.jpg",
-      "text": "Вы уничтожаете устройство. Теперь никто не узнает правду о проекте… кроме вас.",
+    "go_to_cave": {
+      "image": "img/cave_scene.webp",
+      "text": "Вы нашли пещеру. Внутри темно, но слышны странные звуки. Карта показывает, что катер спрятан здесь.",
       "choices": [
         {
-          "text": "Уйти вглубь острова",
-          "next": "step_deep_forest"
+          "text": "Использовать фонарик",
+          "next": "use_flashlight"
         },
         {
-          "text": "Идти к побережью",
-          "next": "step_go_to_beach"
+          "text": "Идти в темноте",
+          "next": "walk_in_dark"
         }
       ]
     },
 
-    "step_find_people": {
-      "image": "img/find_people.jpg",
-      "text": "Вы находите группу сотрудников парка. Они тоже пытаются выжить.",
+    "use_flashlight": {
+      "text": "Фонарик осветил путь. Вы нашли катер! Но чтобы его запустить, нужен ключ.",
       "choices": [
         {
-          "text": "Присоединиться к ним",
-          "next": "step_join_team"
+          "text": "Использовать ключ",
+          "next": "use_key",
+          "conditions": [
+            {
+              "type": "check_inventory",
+              "item": "key",
+              "value": true
+            }
+          ]
         },
         {
-          "text": "Пойти своим путем",
-          "next": "step_solo_path"
+          "text": "Вернуться на пляж за ключом",
+          "next": "beach"
         }
       ]
     },
 
-    "step_join_team": {
-      "image": "img/team_survivors.jpg",
-      "text": "Вы становитесь частью группы. Совместными усилиями вы достигаете катера и уплываете с острова.",
+    "use_key": {
+      "text": "Вы вставили ключ, и катер заработал! Теперь можно уплывать с острова.",
       "choices": [
         {
-          "text": "Уйти на катере",
+          "text": "Уплыть на катере",
+          "next": "win"
+        }
+      ]
+    },
+
+    "walk_in_dark": {
+      "text": "Вы споткнулись и упали. Шум привлёк хищника! Вам не удалось сбежать...",
+      "choices": [
+        {
+          "text": "Начать заново",
+          "next": "start"
+        }
+      ]
+    },
+
+    "hide_from_predator": {
+      "text": "Вы спрятались, и хищник прошёл мимо. Но теперь вы потеряли дрон...",
+      "choices": [
+        {
+          "text": "Вернуться в лагерь",
+          "next": "explore_camp"
+        }
+      ]
+    },
+
+    "run_to_cave": {
+      "text": "Вы добежали до пещеры, но хищник преследует вас! Вам нужно быстро найти выход.",
+      "choices": [
+        {
+          "text": "Использовать карту",
+          "next": "use_map_in_cave",
+          "conditions": [
+            {
+              "type": "check_inventory",
+              "item": "map",
+              "value": true
+            }
+          ]
+        },
+        {
+          "text": "Попробовать найти выход наугад",
+          "next": "random_exit"
+        }
+      ]
+    },
+
+    "use_map_in_cave": {
+      "text": "Карта помогла вам быстро найти катер. Теперь нужно запустить его!",
+      "choices": [
+        {
+          "text": "Использовать ключ",
+          "next": "use_key",
+          "conditions": [
+            {
+              "type": "check_inventory",
+              "item": "key",
+              "value": true
+            }
+          ]
+        },
+        {
+          "text": "Вернуться на пляж за ключом",
+          "next": "beach"
+        }
+      ]
+    },
+
+    "random_exit": {
+      "text": "Вы заблудились в пещере и не смогли найти выход. Ваши силы на исходе...",
+      "choices": [
+        {
+          "text": "Начать заново",
+          "next": "start"
+        }
+      ]
+    },
+
+    "make_fire": {
+      "text": "Вы разожгли костёр. Это отпугнуло хищников, но теперь вы привлекаете внимание других динозавров!",
+      "choices": [
+        {
+          "text": "Попробовать сбежать",
+          "next": "run_from_fire"
+        },
+        {
+          "text": "Остаться у костра",
+          "next": "stay_by_fire"
+        }
+      ]
+    },
+
+    "run_from_fire": {
+      "text": "Вы сбежали от костра и нашли пещеру. Теперь нужно найти катер!",
+      "choices": [
+        {
+          "text": "Идти в пещеру",
+          "next": "go_to_cave"
+        }
+      ]
+    },
+
+    "stay_by_fire": {
+      "text": "Вы остались у костра, но динозавры окружили вас. Выжить не удалось...",
+      "choices": [
+        {
+          "text": "Начать заново",
+          "next": "start"
+        }
+      ]
+    },
+
+    "hide_in_bushes": {
+      "text": "Вы спрятались в кустах. Хищники прошли мимо, но вы потеряли ориентацию. Теперь вам нужно найти дорогу обратно.",
+      "choices": [
+        {
+          "text": "Искать дорогу к лагерю",
+          "next": "find_camp_again"
+        },
+        {
+          "text": "Попробовать найти пляж",
+          "next": "find_beach_again"
+        }
+      ]
+    },
+
+    "find_camp_again": {
+      "text": "Вы нашли лагерь. Теперь можно продолжить поиски.",
+      "choices": [
+        {
+          "text": "Исследовать лагерь",
+          "next": "explore_camp"
+        }
+      ]
+    },
+
+    "find_beach_again": {
+      "text": "Вы вернулись на пляж. Теперь можно попробовать построить плот или искать ключ.",
+      "choices": [
+        {
+          "text": "Искать предметы на пляже",
+          "next": "search_beach"
+        },
+        {
+          "text": "Попробовать построить плот",
+          "next": "build_raft",
+          "conditions": [
+            {
+              "type": "check_inventory",
+              "item": "food",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+
+    "build_raft": {
+      "text": "Вы построили плот из обломков. Теперь можно попробовать уплыть с острова!",
+      "choices": [
+        {
+          "text": "Уплыть на плоту",
+          "next": "raft_escape"
+        },
+        {
+          "text": "Остаться и поискать лучший способ",
+          "next": "beach"
+        }
+      ]
+    },
+
+    "raft_escape": {
+      "text": "Вы уплыли на плоту, но он начал разваливаться. Вдали вы видите спасательный корабль, но не уверены, успеете ли доплыть...",
+      "choices": [
+        {
+          "text": "Попробовать доплыть до корабля",
           "next": "win"
         },
         {
-          "text": "Подождать друзей",
+          "text": "Вернуться на остров",
           "next": "lose"
         }
       ]
     },
 
-    "step_solo_path": {
-      "image": "img/solo_survivor.jpg",
-      "text": "Вы продолжаете путь один. Долгие часы выживания закаляют вас как бойца. Наконец вы находите катер.",
+    "win": {
+      "image": "img/win_scene.webp",
+      "text": "Поздравляем! Вы успешно сбежали с острова. Ваше приключение закончилось победой!",
       "choices": [
         {
-          "text": "Уйти на катере",
-          "next": "win"
-        },
+          "text": "Начать заново",
+          "next": "start"
+        }
+      ]
+    },
+
+    "lose": {
+      "image": "img/lose_scene.webp",
+      "text": "К сожалению, вам не удалось сбежать с острова. Попробуйте ещё раз!",
+      "choices": [
         {
-          "text": "Остаться и ждать",
-          "next": "lose"
+          "text": "Начать заново",
+          "next": "start"
         }
       ]
     }
-
-    
   }
 }
