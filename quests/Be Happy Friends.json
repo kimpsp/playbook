@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "Be Happy Friends",
   "author": "K1mps",
   "description": "Ты проснулся утром, и у тебя уже есть планы на вечер. Но сначала нужно решить, чем заняться до вечера. Твои решения определят, как пройдёт вечер!",
@@ -26,13 +26,6 @@
       "description": "Ящик самого дорогого пива. Я же король на этой вечеринке!"
     }
   ],
-
-  "states": {
-    "beer_stolen": false,
-    "fight_lost": false,
-    "beer_given": false,
-    "party_reached": false
-  },
 
   "nodes": {
     "start": {
@@ -146,9 +139,8 @@
       ],
       "actions": [
         {
-          "type": "set_state",
-          "state": "beer_stolen",
-          "value": true
+          "type": "remove_inventory",
+          "item": "cheap_beer"
         }
       ]
     },
@@ -180,6 +172,12 @@
           "text": "Забить, пойду с пустыми руками",
           "next": "go_to_party_empty"
         }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "cheap_beer"
+        }
       ]
     },
 
@@ -195,27 +193,11 @@
           "text": "Забить, пойду с пустыми руками",
           "next": "go_to_party_empty"
         }
-      ]
-    },
-
-    "buy_cheap_beer_again": {
-      "image": "img/buy_again_scene.webp",
-      "text": "Ты купил ещё один ящик дешёвого пива. Теперь можно идти на вечеринку.",
-      "choices": [
+      ],
+      "actions": [
         {
-          "text": "Идти на вечеринку",
-          "next": "reach_party"
-        }
-      ]
-    },
-
-    "go_to_party_empty": {
-      "image": "img/empty_hands_scene.webp",
-      "text": "Ты решил пойти на вечеринку с пустыми руками. Ну что ж, бывает...",
-      "choices": [
-        {
-          "text": "Идти на вечеринку",
-          "next": "reach_party"
+          "type": "remove_inventory",
+          "item": "cheap_beer"
         }
       ]
     },
@@ -249,12 +231,18 @@
           "text": "Идти на вечеринку",
           "next": "reach_party"
         }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "medium_beer"
+        }
       ]
     },
 
     "refuse_medium_beer": {
       "image": "img/fight_scene.webp",
-      "text": "Бомж кидается в драку за пиво.",
+      "text": "Ты отходишь от магазина, как слышишь за спиной быстрые шаги. Ты и опомниться не успеваешь, как получаешь удар с двух ног в спину. Что-то хрустит под тобой, хорошо, что это снег, а не кости. Ты встаёшь, и начинается драка за пиво.",
       "choices": [
         {
           "text": "Отдать пиво без боя",
@@ -275,6 +263,12 @@
           "text": "Идти на вечеринку",
           "next": "go_to_party_empty"
         }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "medium_beer"
+        }
       ]
     },
 
@@ -289,6 +283,12 @@
         {
           "text": "Идти на вечеринку с пустыми руками",
           "next": "go_to_party_empty"
+        }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "medium_beer"
         }
       ]
     },
@@ -326,6 +326,12 @@
           "text": "Отвали!",
           "next": "tell_off_expensive"
         }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "expensive_beer"
+        }
       ]
     },
 
@@ -355,6 +361,21 @@
       ]
     },
 
+    "refuse_expensive_beer": {
+      "image": "img/fight_scene.webp",
+      "text": "Ты отходишь от магазина, как слышишь за спиной быстрые шаги. Ты и опомниться не успеваешь, как получаешь удар с двух ног в спину. Что-то хрустит под тобой, хорошо, что это снег, а не кости. Ты встаёшь, и начинается драка за пиво.",
+      "choices": [
+        {
+          "text": "Отдать пиво без боя",
+          "next": "release_expensive_beer"
+        },
+        {
+          "text": "Вступить в драку",
+          "next": "fight_expensive_beer"
+        }
+      ]
+    },
+
     "release_expensive_beer": {
       "image": "img/lost_beer_scene.webp",
       "text": "Ты решил отдать пиво без боя. Теперь придётся идти на вечеринку с пустыми руками.",
@@ -362,6 +383,12 @@
         {
           "text": "Идти на вечеринку",
           "next": "go_to_party_empty"
+        }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "expensive_beer"
         }
       ]
     },
@@ -377,6 +404,40 @@
         {
           "text": "Идти на вечеринку с пустыми руками",
           "next": "go_to_party_empty"
+        }
+      ],
+      "actions": [
+        {
+          "type": "remove_inventory",
+          "item": "expensive_beer"
+        }
+      ]
+    },
+
+    "buy_cheap_beer_again": {
+      "image": "img/buy_again_scene.webp",
+      "text": "Ты купил ещё один ящик дешёвого пива. Теперь можно идти на вечеринку.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_inventory",
+          "item": "cheap_beer"
+        }
+      ]
+    },
+
+    "go_to_party_empty": {
+      "image": "img/empty_hands_scene.webp",
+      "text": "Ты решил пойти на вечеринку с пустыми руками. Ну что ж, бывает...",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
         }
       ]
     },
