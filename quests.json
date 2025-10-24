@@ -2,43 +2,11 @@
   "quests": [
     {
       "title": "Jurassic World: Escape",
-      "description": "Вы Молодой специалист, попали на остров island'name', важа задача важна, но удастся ли вам ее выполнить...",
-      "file": "jurassic_world.json",
+      "description": "Ты проснулся утром, и у тебя уже есть планы на вечер. Но сначала нужно решить, чем заняться до вечера. Твои решения определят, как пройдёт вечер!",
+      "file": "Be Happy Friends.json",
       "cover": "covers/cover_q1.jpg",
       "status": "Доступен",
       "new_badge": true
-    },
-    {
-      "title": "World War Apokálupsis",
-      "description": "",
-      "file": "wwa.json",
-      "cover": "covers/in_progress.jpg",
-      "status": "Доступен",
-      "new_badge": false
-    },
-     {
-      "title": "В разработке",
-      "description": "Новый вариант разрботки квеста",
-      "file": "jurassic_q2.json",
-      "cover": "covers/in_progress.jpg",
-      "status": "Доступен",
-      "new_badge": true
-    },
-    {
-      "title": "В разработке",
-      "description": "",
-      "file": "jurassic_world_1.json",
-      "cover": "covers/in_progress.jpg",
-      "status": "В процессе",
-      "new_badge": false
-    },
-    {
-      "title": "В разработке 'Тест'",
-      "description": "",
-      "file": "quests/quest1.html",
-      "cover": "covers/in_progress.jpg",
-      "status": "Заблокирован",
-      "new_badge": false
     }
   ]
 }
