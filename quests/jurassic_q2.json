@@ -1,1 +1,432 @@
+{
+  "version": "1.2",
+  "title": "Вечеринка: Выбор судьбы",
+  "author": "K1mps",
+  "description": "Ты проснулся утром, и у тебя уже есть планы на вечер. Но сначала нужно решить, чем заняться до вечера. Твои решения определят, как пройдёт вечер!",
+  "tags": ["приключение", "юмор", "квест", "выбор"],
+  "default_image": "img/default_scene.webp",
+  "default_music": "sounds/default_theme.mp3",
+  "music": "sounds/party_theme.mp3",
+  "startNode": "start",
 
+  "inventory": [
+    {
+      "id": "cheap_beer",
+      "name": "Дешёвое пиво",
+      "description": "Ящик самого дешёвого пива. Экономия — дело такое."
+    },
+    {
+      "id": "medium_beer",
+      "name": "Среднее пиво",
+      "description": "Ящик среднего по цене пива. И пацанов не обидеть, и сам не подавлюсь."
+    },
+    {
+      "id": "expensive_beer",
+      "name": "Дорогое пиво",
+      "description": "Ящик самого дорогого пива. Я же король на этой вечеринке!"
+    }
+  ],
+
+  "states": {
+    "beer_stolen": false,
+    "fight_lost": false,
+    "beer_given": false,
+    "party_reached": false
+  },
+
+  "nodes": {
+    "start": {
+      "image": "img/morning_scene.webp",
+      "text": "Ты проснулся утром. Планы на вечер у тебя уже есть. Осталось решить, чем ты займёшься до вечера.",
+      "choices": [
+        {
+          "text": "Покимарить до вечера",
+          "next": "nap_all_day"
+        },
+        {
+          "text": "Сделать домашние дела",
+          "next": "do_chores"
+        },
+        {
+          "text": "Отдохнуть на диванчике",
+          "next": "do_chores"
+        }
+      ]
+    },
+
+    "nap_all_day": {
+      "image": "img/sleep_scene.webp",
+      "text": "Ты решил покимарить до вечера и в итоге проспал вечеринку. Посмотрев на часы, подумал, что уже нет смысла ехать, и остался дома.",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ]
+    },
+
+    "do_chores": {
+      "image": "img/chores_scene.webp",
+      "text": "Ты сделал дела или отдохнул на диванчике. Теперь ты готов выдвигаться. Осталось решить, каким способом:",
+      "choices": [
+        {
+          "text": "Поехать на машине",
+          "next": "go_by_car"
+        },
+        {
+          "text": "Отправиться на такси",
+          "next": "go_by_taxi"
+        },
+        {
+          "text": "Добраться пешком",
+          "next": "go_by_foot"
+        }
+      ]
+    },
+
+    "go_by_car": {
+      "image": "img/car_scene.webp",
+      "text": "Ты приехал на вечеринку на машине, сидел и попивал свою 0%-ку, с мыслями о том, как же ты был не прав, выбрав поездку на личном авто. Домой ты вернулся ещё до того, как соседские дети уснули, и неважно, что у них нет детей.",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ]
+    },
+
+    "go_by_taxi": {
+      "image": "img/taxi_scene.webp",
+      "text": "По пути с комфортом ты решил прикупить пивка, не с пустыми же руками в гости идти. Осталось решить, какое пиво брать:",
+      "choices": [
+        {
+          "text": "Ящик самого дешёвого пива",
+          "next": "buy_cheap_beer"
+        },
+        {
+          "text": "Ящик среднего по цене пива",
+          "next": "buy_medium_beer"
+        },
+        {
+          "text": "Ящик самого дорогого пива",
+          "next": "buy_expensive_beer"
+        }
+      ]
+    },
+
+    "buy_cheap_beer": {
+      "image": "img/cheap_beer_scene.webp",
+      "text": "На выходе тебя хватает бомж за руку, со словами: — Дай пивка, трубы горят.",
+      "choices": [
+        {
+          "text": "Держи баночку",
+          "next": "give_cheap_beer"
+        },
+        {
+          "text": "Не, мужик. Не для тебя брал пивко.",
+          "next": "refuse_cheap_beer"
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_inventory",
+          "item": "cheap_beer"
+        }
+      ]
+    },
+
+    "give_cheap_beer": {
+      "image": "img/homeless_scene.webp",
+      "text": "Ты слышишь, как за спиной открывается банка пива, одним глотком она опустошается, и с криком — «Дай пива!» Ты получаешь удар в спину. Пока ты встал и отряхнулся, бомжа уже и рядом не было, он убежал вместе с ящиком пива...",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ],
+      "actions": [
+        {
+          "type": "set_state",
+          "state": "beer_stolen",
+          "value": true
+        }
+      ]
+    },
+
+    "refuse_cheap_beer": {
+      "image": "img/fight_scene.webp",
+      "text": "Ты отходишь от магазина, как слышишь за спиной быстрые шаги. Ты и опомниться не успеваешь, как получаешь удар с двух ног в спину. Что-то хрустит под тобой, хорошо, что это снег, а не кости. Ты встаёшь, и начинается драка за пиво.",
+      "choices": [
+        {
+          "text": "Отпустить пиво...",
+          "next": "release_cheap_beer"
+        },
+        {
+          "text": "Продолжить драку?!",
+          "next": "fight_cheap_beer"
+        }
+      ]
+    },
+
+    "release_cheap_beer": {
+      "image": "img/lost_beer_scene.webp",
+      "text": "Ты решил смириться с ситуацией и отпустил пиво, смотря вслед убегающему бомжу. Думал только о том, придти в гости с пустыми руками или купить ещё ящик самого дешёвого, ведь изначально ты и так сэкономил...",
+      "choices": [
+        {
+          "text": "Купить ещё ящик самого дешёвого",
+          "next": "buy_cheap_beer_again"
+        },
+        {
+          "text": "Забить, пойду с пустыми руками",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "fight_cheap_beer": {
+      "image": "img/fight_lost_scene.webp",
+      "text": "Ты решил продолжить драку, всё бы ничего, но бомж местный, а ты нет. Крик бомжа — «Пацаны, наших бьют!!!» Заспавнил ещё двух бомжей, а ты как был один, так и остался... Смысла продолжать нету, они взяли количеством...",
+      "choices": [
+        {
+          "text": "Купить ещё ящик самого дешёвого",
+          "next": "buy_cheap_beer_again"
+        },
+        {
+          "text": "Забить, пойду с пустыми руками",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "buy_cheap_beer_again": {
+      "image": "img/buy_again_scene.webp",
+      "text": "Ты купил ещё один ящик дешёвого пива. Теперь можно идти на вечеринку.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
+        }
+      ]
+    },
+
+    "go_to_party_empty": {
+      "image": "img/empty_hands_scene.webp",
+      "text": "Ты решил пойти на вечеринку с пустыми руками. Ну что ж, бывает...",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
+        }
+      ]
+    },
+
+    "buy_medium_beer": {
+      "image": "img/medium_beer_scene.webp",
+      "text": "На выходе тебя хватает бомж за руку, со словами: — Дай пивка, трубы горят.",
+      "choices": [
+        {
+          "text": "Держи баночку",
+          "next": "give_medium_beer"
+        },
+        {
+          "text": "Не, мужик. Не для тебя брал пивко.",
+          "next": "refuse_medium_beer"
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_inventory",
+          "item": "medium_beer"
+        }
+      ]
+    },
+
+    "give_medium_beer": {
+      "image": "img/homeless_calm_scene.webp",
+      "text": "Бездомный сидит и спокойно потягивает пиво.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
+        }
+      ]
+    },
+
+    "refuse_medium_beer": {
+      "image": "img/fight_scene.webp",
+      "text": "Бомж кидается в драку за пиво.",
+      "choices": [
+        {
+          "text": "Отдать пиво без боя",
+          "next": "release_medium_beer"
+        },
+        {
+          "text": "Вступить в драку",
+          "next": "fight_medium_beer"
+        }
+      ]
+    },
+
+    "release_medium_beer": {
+      "image": "img/lost_beer_scene.webp",
+      "text": "Ты решил отдать пиво без боя. Теперь придётся идти на вечеринку с пустыми руками.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "fight_medium_beer": {
+      "image": "img/fight_lost_scene.webp",
+      "text": "Ты вступил в драку, но бомж оказался крепким орешком. Ты проиграл и потерял пиво.",
+      "choices": [
+        {
+          "text": "Купить ящик самого дешёвого",
+          "next": "buy_cheap_beer_again"
+        },
+        {
+          "text": "Идти на вечеринку с пустыми руками",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "buy_expensive_beer": {
+      "image": "img/expensive_beer_scene.webp",
+      "text": "Ты купил дорогое пиво. На выходе тебя за руку цепляет бомж: — Дай пивка, трубы горят.",
+      "choices": [
+        {
+          "text": "Дать баночку",
+          "next": "give_expensive_beer"
+        },
+        {
+          "text": "Отказать",
+          "next": "refuse_expensive_beer"
+        }
+      ],
+      "actions": [
+        {
+          "type": "add_inventory",
+          "item": "expensive_beer"
+        }
+      ]
+    },
+
+    "give_expensive_beer": {
+      "image": "img/homeless_calm_scene.webp",
+      "text": "Бомж сидит и спокойно попивает пивко. Бомж кричит вслед: — Эй, мужик!",
+      "choices": [
+        {
+          "text": "Чего?",
+          "next": "ask_what_expensive"
+        },
+        {
+          "text": "Отвали!",
+          "next": "tell_off_expensive"
+        }
+      ]
+    },
+
+    "ask_what_expensive": {
+      "image": "img/homeless_thanks_scene.webp",
+      "text": "На вопрос 'чего?', бомж в ответ говорит: — Спасибо, мужик, вкусное пиво! Ты спокойно выдвигаешься дальше, до вечеринки.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "reach_party"
+        }
+      ]
+    },
+
+    "tell_off_expensive": {
+      "image": "img/fight_scene.webp",
+      "text": "На грубость бомж реагирует жёстко и кидается в драку за пиво.",
+      "choices": [
+        {
+          "text": "Отдать пиво без боя",
+          "next": "release_expensive_beer"
+        },
+        {
+          "text": "Вступить в драку",
+          "next": "fight_expensive_beer"
+        }
+      ]
+    },
+
+    "release_expensive_beer": {
+      "image": "img/lost_beer_scene.webp",
+      "text": "Ты решил отдать пиво без боя. Теперь придётся идти на вечеринку с пустыми руками.",
+      "choices": [
+        {
+          "text": "Идти на вечеринку",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "fight_expensive_beer": {
+      "image": "img/fight_lost_scene.webp",
+      "text": "Ты вступил в драку, но бомж оказался крепким орешком. Ты проиграл и потерял пиво.",
+      "choices": [
+        {
+          "text": "Купить ящик самого дешёвого",
+          "next": "buy_cheap_beer_again"
+        },
+        {
+          "text": "Идти на вечеринку с пустыми руками",
+          "next": "go_to_party_empty"
+        }
+      ]
+    },
+
+    "go_by_foot": {
+      "image": "img/walk_scene.webp",
+      "text": "Казалось бы, полгорода или полквартала — неважно, ведь ты не осилил. Взял баночку пивка и пошёл домой.",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ]
+    },
+
+    "reach_party": {
+      "image": "img/party_door_scene.webp",
+      "text": "Вот ты и дошёл до вечеринки. Ты стоишь возле двери.",
+      "choices": [
+        {
+          "text": "Постучаться",
+          "next": "knock_door"
+        },
+        {
+          "text": "Дёрнуть дверную ручку",
+          "next": "pull_door"
+        }
+      ]
+    },
+
+    "knock_door": {
+      "image": "img/knock_scene.webp",
+      "text": "Никто не услышал твой стук. Ты остался тусить в подъезде у двери и начал пить прямо на лестнице.",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ]
+    },
+
+    "pull_door": {
+      "image": "img/party_scene.webp",
+      "text": "Дверь открылась, вот ты и на месте. Поздравляем! Вы замечательно потусили в компании друзей и знакомых!",
+      "choices": [
+        {
+          "text": "Начать с начала?",
+          "next": "start"
+        }
+      ]
+    }
+  }
+}
