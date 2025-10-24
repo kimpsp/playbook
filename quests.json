@@ -1,9 +1,9 @@
 {
   "quests": [
     {
-      "title": "Jurassic World: Escape",
+      "title": "Happy Be Friends",
       "description": "Ты проснулся утром, и у тебя уже есть планы на вечер. Но сначала нужно решить, чем заняться до вечера. Твои решения определят, как пройдёт вечер!",
-      "file": "Be Happy Friends.json",
+      "file": "Happy Be Friends.json",
       "cover": "covers/cover_q1.jpg",
       "status": "Доступен",
       "new_badge": true
