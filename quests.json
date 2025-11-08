@@ -7,6 +7,13 @@
       "cover": "covers/cover_q1.jpg",
       "status": "Доступен",
       "new_badge": true
-    }
+    },
+    {
+      "title": "Predator",
+      "description": "Ты — один из членов элитной команды спецназа.Ваша миссия: спасти группу американских дипломатов в джунглях Южной Америки.",
+      "file": "predator.json",
+      "cover": "covers/predator.jpg",
+      "status": "Доступен",
+      "new_badge": true
   ]
 }
