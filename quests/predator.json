@@ -7,10 +7,10 @@
   "default_image": "img/default_scene.webp",
   "default_music": "sounds/default_theme.mp3",
   "music": "sounds/party_theme.mp3",
-  "startNode": "mission_start",
+  "startNode": "start",
   "inventory": [],
   "nodes": {
-    "mission_start": {
+    "start": {
       "image": "img/default_scene.webp",
       "text": "Вы — часть отряда спецназа. Ваша задача — спасти заложников в джунглях Южной Америки. Командир дал приказ: двигаться быстро, без лишнего шума. Впереди — тропа, ведущая в деревню.",
       "choices": [
