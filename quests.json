@@ -15,6 +15,14 @@
       "cover": "covers/predator.jpg",
       "status": "Доступен",
       "new_badge": true
+    },
+     {
+      "title": "wwa",
+      "description": "Тут текст",
+      "file": "wwa.json",
+      "cover": "covers/wwa.jpg",
+      "status": "Доступен",
+      "new_badge": true
     }
   ]
 }
