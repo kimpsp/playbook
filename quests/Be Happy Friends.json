@@ -9,23 +9,7 @@
   "music": "sounds/party_theme.mp3",
   "startNode": "start",
 
-  "inventory": [
-    {
-      "id": "cheap_beer",
-      "name": "Дешёвое пиво",
-      "description": "Ящик самого дешёвого пива. Экономия — дело такое."
-    },
-    {
-      "id": "medium_beer",
-      "name": "Среднее пиво",
-      "description": "Ящик среднего по цене пива. И пацанов не обидеть, и сам не подавлюсь."
-    },
-    {
-      "id": "expensive_beer",
-      "name": "Дорогое пиво",
-      "description": "Ящик самого дорогого пива. Я же король на этой вечеринке!"
-    }
-  ],
+  "inventory": [],
 
   "nodes": {
     "start": {
