@@ -24,6 +24,14 @@
       "status": "Доступен",
       "new_badge": true
     },
+    {
+      "title": "Test",
+      "description": "Тест",
+      "file": "test.json",
+      "cover": "covers/test.jpg",
+      "status": "Доступен",
+      "new_badge": true
+    },
      {
       "title": "wwa",
       "description": "Тут текст",
