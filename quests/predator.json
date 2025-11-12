@@ -1,6 +1,14 @@
 {
+  "version": "1.0.1",
   "title": "Predator: Jungle Run",
+  "author": "K1mps",
+  "description": "Ты часть отряда по решению сложных ситуаций, пришло твое время",
+  "tags": ["приключение", "юмор", "квест", "выбор"],
+  "default_image": "img/default_scene.webp",
+  "default_music": "sounds/default_theme.mp3",
+  "music": "sounds/party_theme.mp3",
   "startNode": "mission_start",
+  
   "nodes": {
     "mission_start": {
       "text": "Вы — часть отряда спецназа. Ваша задача — спасти заложников в джунглях Южной Америки. Командир дал приказ: двигаться быстро, без лишнего шума. Впереди — тропа, ведущая в деревню.",
