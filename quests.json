@@ -16,6 +16,14 @@
       "status": "Доступен",
       "new_badge": true
     },
+    {
+      "title": "jurassic",
+      "description": "Тут текст и динозавры",
+      "file": "jurassic_world.json",
+      "cover": "covers/jurassic.jpg",
+      "status": "Доступен",
+      "new_badge": true
+    },
      {
       "title": "wwa",
       "description": "Тут текст",
