@@ -8,6 +8,8 @@
   "default_music": "sounds/default_theme.mp3",
   "music": "sounds/party_theme.mp3",
   "startNode": "mission_start",
+
+  "inventory": [],
   
   "nodes": {
     "mission_start": {
