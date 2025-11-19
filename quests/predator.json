@@ -2,11 +2,11 @@
   "version": "1.0.1",
   "title": "Predator: Jungle Run",
   "author": "K1mps",
-  "description": "Ты часть отряда по решению сложных ситуаций, пришло твое время",
-  "tags": ["приключение", "юмор", "квест", "выбор"],
+  "description": "Ты часть отряда по решению сложных ситуаций. Твоя миссия — выжить в джунглях, где охотник становится добычей.",
+  "tags": ["приключение", "выживание", "хищник", "квест"],
   "default_image": "img/default_scene.webp",
   "default_music": "sounds/default_theme.mp3",
-  "music": "sounds/party_theme.mp3",
+  "music": "sounds/jungle_theme.mp3",
   "startNode": "start",
   "inventory": [],
   "nodes": {
@@ -188,7 +188,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -220,7 +220,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -234,7 +234,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -284,7 +284,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -298,7 +298,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -312,7 +312,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -326,7 +326,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -340,7 +340,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -354,7 +354,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -368,7 +368,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -382,7 +382,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -396,7 +396,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -406,11 +406,11 @@
     },
     "run_alone_die": {
       "image": "img/default_scene.webp",
-      "text": "Вы бежите один. Хищник не преследует. Через час вы падаете от жары. Видите тени. Слышишь голос: «Я был хорошим солдатом»... и темнота.",
+      "text": "Вы бежите один. Хищник не преследует. Через час вы падаете от жары. Видите тени. Слышите голос: «Я был хорошим солдатом»... и темнота.",
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -424,7 +424,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -438,7 +438,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -452,7 +452,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -466,7 +466,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -476,11 +476,11 @@
     },
     "attack_fire_die": {
       "image": "img/default_scene.webp",
-      "text": "Вы атакуете источник огня. Это ловушка. Мины срабатывают. Вы разрываете на части.",
+      "text": "Вы атакуете источник огня. Это ловушка. Мины срабатывают. Вы разрываетесь на части.",
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -494,7 +494,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -508,7 +508,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -522,7 +522,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -536,7 +536,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -550,7 +550,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -564,7 +564,7 @@
       "choices": [
         {
           "text": "Начать заново",
-          "next": "mission_start"
+          "next": "start"
         },
         {
           "text": "Вернуться на главную",
@@ -578,7 +578,7 @@
       "choices": [
         {
           "text": "Начать квест",
-          "next": "mission_start"
+          "next": "start"
         }
       ]
     }
